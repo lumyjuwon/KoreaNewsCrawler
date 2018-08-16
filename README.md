@@ -28,4 +28,4 @@
     Mkaer_url 기간을 수정하여 원하는 기간에 맞는 데이터를 수집하세요.
  
  ## 결과물
- ![ex_screenshot](./img/2.jpg)
+ ![ex_screenshot](./img/2.PNG)
