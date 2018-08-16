@@ -28,8 +28,8 @@
     Mkaer_url 기간을 수정하여 원하는 기간에 맞는 데이터를 수집하세요.
  
  ## 결과물
- ![ex_screenshot](./img/article_result.PNG)
- ![ex_screenshot](./img/sport_result.PNG)
+ ![ex_screenshot](./img/article_resultimg.PNG)
+ ![ex_screenshot](./img/sport_resultimg.PNG)
  
  수집한 모든 데이터는 csv 확장자로 저장됩니다.
  
