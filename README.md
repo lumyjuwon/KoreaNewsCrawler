@@ -26,7 +26,7 @@
   
 이 메서드는 크롤링 실행 메서드입니다.
   
-e.g)
+* e.g)
 
 Crawler = ArticleCrawler()
 
