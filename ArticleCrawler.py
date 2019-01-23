@@ -151,7 +151,7 @@ class ArticleCrawler:
 
 
 if __name__ == "__main__":
-    Parser = ArticleCrawler()
-    Parser.set_category("정치", "IT과학", "세계", "경제")
-    Parser.set_date_range(2018, 2018, 1)
-    Parser.start()
+    Cralwer = ArticleCrawler()
+    Cralwer.set_category("정치", "IT과학", "세계", "경제")
+    Cralwer.set_date_range(2017, 2018, 4)
+    Cralwer.start()
