@@ -12,7 +12,7 @@ import csv
 import re
 
 
-class ArticleCrawler:
+class ArticleCralwer:
     def __init__(self):
         self.category = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105}
         self.selected_category = []
@@ -151,7 +151,7 @@ class ArticleCrawler:
 
 
 if __name__ == "__main__":
-    Cralwer = ArticleCrawler()
+    Cralwer = ArticleCralwer()
     Cralwer.set_category("정치", "IT과학", "세계", "경제")
     Cralwer.set_date_range(2017, 2018, 4)
     Cralwer.start()
