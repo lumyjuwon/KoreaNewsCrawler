@@ -10,11 +10,11 @@
 ## User Python Installation
   * BeautifulSoup
   
-  >> ``` pip install beautifulsoup4 ```
+    ``` pip install beautifulsoup4 ```
   
   * requests
   
-  >> ``` pip install requests ```
+    ``` pip install requests ```
 ## Method
 
 * set_category(category_name)
