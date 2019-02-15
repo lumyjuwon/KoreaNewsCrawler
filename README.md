@@ -1,4 +1,4 @@
-# newscrawler
+# Newscrawler
 이 크롤러는 네이버 포털에 올라오는 언론사 뉴스 기사들을 크롤링 해주는 크롤러입니다.
 
 크롤링 가능한 기사 카테고리는 정치, 경제, 생활문화, IT과학, 사회 입니다.
@@ -7,15 +7,15 @@
 
 * 스포츠 기사는 현재 html 형식이 바껴 사용이 불가능 한 상태입니다. 빠른 시일내로 업데이트 하겠습니다.
 
-## 사용자 파이썬 패키지
+## User Python Installation
   * BeautifulSoup
   
-  SetUp: pip install beautifulsoup4
+  >> ``` pip install beautifulsoup4 ```
   
   * requests
   
-  SetUp: pip install requests
-## 사용법
+  >> ``` pip install requests ```
+## Method
 
 * set_category(category_name)
   
@@ -31,7 +31,7 @@
   
 이 메서드는 크롤링 실행 메서드입니다.
   
-* 예시)
+## Example
 
 Crawler = ArticleCrawler()
 
@@ -44,7 +44,7 @@ Crawler.start()
   2017년 1월 ~ 2018년 4월까지 정치, IT과학, 세계, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
     
  
- ## 결과물
+ ## Results
  ![ex_screenshot](./img/article_resultimg.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
