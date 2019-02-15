@@ -30,6 +30,7 @@
  이 메서드는 크롤링 실행 메서드입니다.
   
 ## Example
+from articlecralwer import ArticleCralwer
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "세계", "경제")  
