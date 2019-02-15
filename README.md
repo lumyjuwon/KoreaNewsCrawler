@@ -11,7 +11,10 @@
   * BeautifulSoup
   
   SetUp: pip install beautifulsoup4
-
+  
+  * requests
+  
+  SetUp: pip install requests
 ## 사용법
 
 * set_category(category_name)
