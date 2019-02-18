@@ -12,7 +12,9 @@
   
   * **requests**
   
-    ``` pip install requests ```
+    ``` pip install requests ```  
+    
+ 외부 라이브러리 설치가 필요합니다.
 ## Method
 
 * **set_category(category_name)**
@@ -30,14 +32,15 @@
  이 메서드는 크롤링 실행 메서드입니다.
   
 ## Example
+```
 from articlecralwer import ArticleCralwer
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "세계", "경제")  
 Crawler.set_date_range(2017, 2018, 4)  
 Crawler.start()
-  
-  ```2017년 1월 ~ 2018년 4월까지 정치, IT과학, 세계, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.```
+```
+  2017년 1월 ~ 2018년 4월까지 정치, IT과학, 세계, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
     
  
  ## Results
