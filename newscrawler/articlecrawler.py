@@ -20,11 +20,10 @@ class ArticleCralwer:
 
     def set_category(self, *args):
         for key in args:
-            try:
-                self.category.get(key)
-            except Exception:
+            if self.category.get(key) is None:
                 raise InvalidCategory(key)
-        self.selected_category = args
+            else:
+                self.selected_category = args
 
     def set_date_range(self, startyear, endyear, endmonth):
         args = [startyear, endyear, endmonth]
@@ -94,15 +93,16 @@ class ArticleCralwer:
     def parse(self, category_name):
         print(category_name + " pid: " + str(os.getpid()))
 
-        file = open('Article_' + category_name + '.csv', 'w', encoding='euc-kr', newline='')
+        file = open('Article_' + category_name + '.csv', 'w', encoding='euc_kr', newline='')
         wcsv = csv.writer(file)
 
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.category.get(category_name)) + "&date="
         final_urlday = self.make_news_page_url(url, self.date['startyear'], self.date['endyear'], 1, self.date['endmonth'])  # startyear년 1월 ~ endyear의 endmonth 날짜까지 기사를 수집합니다.
-        print(category_name + " Urls are made")
+        print(category_name + " Urls are generated")
+        print("The crawler starts")
 
         for URL in final_urlday:
-            
+
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
             
@@ -138,9 +138,10 @@ class ArticleCralwer:
                     if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
 
-                    wcsv.writerow([news_date, text_headline, text_sentence, text_company, category_name, content_url])
+                    wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
 
                 except Exception as ex:  # UnicodeEncodeError ..
+                    print(ex)
                     pass
         file.close()
 
@@ -151,7 +152,7 @@ class ArticleCralwer:
 
 
 if __name__ == "__main__":
-    Cralwer = ArticleCralwer()
-    Cralwer.set_category("정치", "IT과학", "세계", "경제")
-    Cralwer.set_date_range(2017, 2018, 4)
-    Cralwer.start()
+    Crawler = ArticleCralwer()
+    Crawler.set_category("역사")
+    Crawler.set_date_range(2018, 2018, 1)
+    Crawler.start()
