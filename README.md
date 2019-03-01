@@ -35,7 +35,7 @@
   
 ## Example
 ```
-from articlecralwer import ArticleCralwer
+from articlecralwer import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "세계", "경제")  
@@ -43,14 +43,19 @@ Crawler.set_date_range(2017, 2018, 4)
 Crawler.start()
 ```
   2017년 1월 ~ 2018년 4월까지 정치, IT과학, 세계, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
-    
- 
- ## Results
+  
+## Multi Thread 안내
+  intel i5 9600 cpu로 테스트 해본 결과 1개의 카테고리 당 14%의 cpu 점유율을 보였습니다.
+  크롤러를 실행하는 컴퓨터 사양에 맞게 카테고리 개수를 맞추시거나 반복문을 이용하시기 바랍니다.
+  
+  ![ex_screenshot](./img/multithread.PNG)
+  
+## Results
  ![ex_screenshot](./img/article_resultimg.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
  수집한 모든 데이터는 csv 확장자로 저장됩니다.
  
- ## License
+## License
  Apache License 2.0
  
