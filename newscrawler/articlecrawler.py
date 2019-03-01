@@ -14,7 +14,7 @@ import re
 
 class ArticleCrawler:
     def __init__(self):
-        self.category = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105}
+        self.category = {'politics': 100, 'economy': 101, 'society': 102, 'culture': 103, 'global': 104, 'IT/science': 105}
         self.selected_category = []
         self.date = {'startyear': 0, 'endyear': 0, 'endmonth': 0}
 
@@ -159,6 +159,6 @@ class ArticleCrawler:
 
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
-    Crawler.set_category("정치", "경제")  # 정치, 경제, 생활문화, IT과학, 사회 카테고리 사용 가능
+    Crawler.set_category("politics", "economy")  # 정치, 경제, 생활문화, IT과학, 사회 카테고리 사용 가능
     Crawler.set_date_range(2017, 2018, 4)  # 2017년 1월부터 2018년 4월까지 크롤링 시작
     Crawler.start()
