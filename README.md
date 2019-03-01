@@ -35,7 +35,7 @@
   
 ## Example
 ```
-from articlecralwer import ArticleCrawler
+from articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "세계", "경제")  
@@ -48,7 +48,7 @@ Crawler.start()
   intel i5 9600 cpu로 테스트 해본 결과 1개의 카테고리 당 14%의 cpu 점유율을 보였습니다.
   크롤러를 실행하는 컴퓨터 사양에 맞게 카테고리 개수를 맞추시거나 반복문을 이용하시기 바랍니다.
   
-  ![ex_screenshot](./img/multithread.PNG)
+  ![ex_screenshot](./img/MultiThread.PNG)
   
 ## Results
  ![ex_screenshot](./img/article_resultimg.PNG)
