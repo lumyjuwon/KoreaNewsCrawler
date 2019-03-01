@@ -14,7 +14,7 @@ import re
 
 class ArticleCrawler:
     def __init__(self):
-        self.category = {'politics': 100, 'economy': 101, 'society': 102, 'culture': 103, 'global': 104, 'IT/science': 105}
+        self.category = {'politics': 100, 'economy': 101, 'society': 102, 'lifeculture': 103, 'global': 104, 'IT/science': 105}
         self.selected_category = []
         self.date = {'startyear': 0, 'endyear': 0, 'endmonth': 0}
 
