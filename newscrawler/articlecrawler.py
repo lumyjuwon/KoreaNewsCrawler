@@ -12,7 +12,7 @@ import csv
 import re
 
 
-class ArticleCralwer:
+class ArticleCrawler:
     def __init__(self):
         self.category = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105}
         self.selected_category = []
@@ -36,13 +36,16 @@ class ArticleCralwer:
         print(self.date)
 
     def clearcontent(self, text):
-        special_symbol_removed_content = re.sub('[\{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$%&n▲▶◆◀■\\\=\(\'\"]','', text)
-        end_phrase_removed_content = re.sub('본문 내용|TV플레이어| 동영상 뉴스|flash 오류를 우회하기 위한 함수 추가fuctio flashremoveCallback|tt|t|앵커 멘트|xa0', '', special_symbol_removed_content)
+        special_symbol_removed_content = re.sub('[\{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$%&n▲▶◆◀■\\\=\(\'\"]', '', text)
+        end_phrase_removed_content = re.sub(
+            '본문 내용|TV플레이어| 동영상 뉴스|flash 오류를 우회하기 위한 함수 추가fuctio flashremoveCallback|tt|t|앵커 멘트|xa0', '',
+            special_symbol_removed_content)
         blank_removed_content = end_phrase_removed_content.strip().replace('   ', '')  # 공백 에러 삭제
         reversed_content = ''.join(reversed(blank_removed_content))  # 기사 내용을 reverse 한다.
         content = ''
         for i in range(0, len(blank_removed_content)):
-            if reversed_content[i:i+2] == '.다':  # reverse 된 기사 내용중, ".다"로 끝나는 경우 기사 내용이 끝난 것이기 때문에 기사 내용이 끝난 후의 광고, 기자 등의 정보는 다 지운다.
+            if reversed_content[
+               i:i + 2] == '.다':  # reverse 된 기사 내용중, ".다"로 끝나는 경우 기사 내용이 끝난 것이기 때문에 기사 내용이 끝난 후의 광고, 기자 등의 정보는 다 지운다.
                 content = ''.join(reversed(reversed_content[i:]))
                 break
         return content
@@ -83,9 +86,10 @@ class ArticleCralwer:
                         month_day = "0" + str(month_day)
                     url = url + str(year) + str(month) + str(month_day)
                     final_url = url  # page 날짜 정보만 있고 page 정보가 없는 url 임시 저장
-                    totalpage = self.find_news_totalpage(final_url + "&page=1000")  #totalpage는 네이버 페이지 구조를 이용해서 page=1000으로 지정해 totalpage를 알아냄 ( page=1000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨)
+                    totalpage = self.find_news_totalpage(
+                        final_url + "&page=1000")  # totalpage는 네이버 페이지 구조를 이용해서 page=1000으로 지정해 totalpage를 알아냄 ( page=1000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨)
                     for page in range(1, totalpage + 1):
-                        url = final_url # url page 초기화
+                        url = final_url  # url page 초기화
                         url = url + "&page=" + str(page)
                         maked_url.append(url)
         return maked_url
@@ -96,8 +100,10 @@ class ArticleCralwer:
         file = open('Article_' + category_name + '.csv', 'w', encoding='euc_kr', newline='')
         wcsv = csv.writer(file)
 
-        url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.category.get(category_name)) + "&date="
-        final_urlday = self.make_news_page_url(url, self.date['startyear'], self.date['endyear'], 1, self.date['endmonth'])  # startyear년 1월 ~ endyear의 endmonth 날짜까지 기사를 수집합니다.
+        url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(
+            self.category.get(category_name)) + "&date="
+        final_urlday = self.make_news_page_url(url, self.date['startyear'], self.date['endyear'], 1, self.date[
+            'endmonth'])  # startyear년 1월 ~ endyear의 endmonth 날짜까지 기사를 수집합니다.
         print(category_name + " Urls are generated")
         print("The crawler starts")
 
@@ -105,7 +111,7 @@ class ArticleCralwer:
 
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
-            
+
             request = requests.get(URL)
             document = BeautifulSoup(request.content, 'html.parser')
             tag_document = document.find_all('dt', {'class': 'photo'})
@@ -152,7 +158,7 @@ class ArticleCralwer:
 
 
 if __name__ == "__main__":
-    Crawler = ArticleCralwer()
-    Crawler.set_category("역사")
-    Crawler.set_date_range(2018, 2018, 1)
+    Crawler = ArticleCrawler()
+    Crawler.set_category("정치", "경제")  # 정치, 경제, 생활문화, IT과학, 사회 카테고리 사용 가능
+    Crawler.set_date_range(2017, 2018, 4)  # 2017년 1월부터 2018년 4월까지 크롤링 시작
     Crawler.start()
