@@ -66,7 +66,7 @@ Crawlable article categories include politics, economy, lifeculture, global, IT/
 In the case of sports articles, that include Baseball, soccer, basketball, volleyball, golf, general sports, e-sports.  
 
 **In the case of sports articles, you can't use sport article crawler because html form is changed. I will update sport article crawler 
-as soon as possible. **
+as soon as possible.**
 
 ## User Python Installation
 You should install as follow as
@@ -106,7 +106,7 @@ Crawler.start()
 ```
  From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for political, IT science, global, and economic category news.
   
-## Multi Thread 안내
+## Multi Thread Information
 Testing with intel i5 9600 cpu showed an average ** 8% ** cpu share per category.  
 Please adjust the number of categories to match the specifications of the computer running the crawler, or use a loop.
   
