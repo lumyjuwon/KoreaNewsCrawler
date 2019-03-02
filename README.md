@@ -55,6 +55,13 @@ Crawler.start()
  ![ex_screenshot](./img/article_resultimg.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
+ Colum A: 기사 날짜  
+ Colum B: 기사 제목  
+ Colum C: 기사 본문 내용  
+ Colum D: 언론사  
+ Colum E: 기사 카테고리  
+ Colum F: 기사 주소  
+ 
  수집한 모든 데이터는 csv 확장자로 저장됩니다.  
 
 
@@ -115,6 +122,13 @@ Please adjust the number of categories to match the specifications of the comput
 ## Results
  ![ex_screenshot](./img/article_resultimg.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
+ 
+ Colum A: Article Date  
+ Colum B: Article headline  
+ Colum C: Article main text  
+ Colum D: The press  
+ Colum E: Article Category  
+ Colum F: Article URL  
  
  All collected data is saved as a csv.
  
