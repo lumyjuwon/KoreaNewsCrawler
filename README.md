@@ -22,7 +22,7 @@
 * **set_category(category_name)**
   
  이 메서드는 수집하려고자 하는 카테고리는 설정하는 메서드입니다.  
- 파라미터에 들어갈 수 있는 카테고리는 '정치', '경제', '사회', '생활문화', '세계', 'IT과학'입니다.  
+ 파라미터에 들어갈 수 있는 카테고리는 'politics', 'economy', 'society', 'lifeculture', 'global', 'IT/science'입니다.  
  파라미터는 여러 개 들어갈 수 있습니다.  
  category_name: politics, economy, society, lifeculture, global, IT/science
   
