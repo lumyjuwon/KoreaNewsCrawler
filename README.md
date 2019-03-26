@@ -39,7 +39,7 @@
 from articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
-Crawler.set_category("politics", "IT/science", "global", "economy")  
+Crawler.set_category("정치", "IT과학", "economy")  
 Crawler.set_date_range(2017, 2018, 4)  
 Crawler.start()
 ```
