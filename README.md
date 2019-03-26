@@ -52,7 +52,7 @@ Crawler.start()
   ![ex_screenshot](./img/MultiThread.PNG)
   
 ## Results
- ![ex_screenshot](./img/article_resultimg.PNG)
+ ![ex_screenshot](./img/article_result.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
  Colum A: 기사 날짜  
@@ -120,7 +120,7 @@ Please adjust the number of categories to match the specifications of the comput
   ![ex_screenshot](./img/MultiThread.PNG)
   
 ## Results
- ![ex_screenshot](./img/article_resultimg.PNG)
+ ![ex_screenshot](./img/article_result.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
  Colum A: Article Date  
