@@ -16,16 +16,15 @@ import re
 class ArticleCrawler(object):
     def __init__(self):
         self.parser = ArticleParser()
-        self.category = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, 'IT과학': 105}
-        self.selected_category = []
+        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, 'IT과학': 105}
+        self.selected_categories = []
         self.date = {'start_year': 0, 'end_year': 0, 'end_month': 0}
 
     def set_category(self, *args):
         for key in args:
-            if self.category.get(key) is None:
+            if self.categories.get(key) is None:
                 raise InvalidCategory(key)
-            else:
-                self.selected_category = args
+        self.selected_categories = args
 
     def set_date_range(self, start_year, end_year, end_month):
         args = [start_year, end_year, end_month]
@@ -77,7 +76,7 @@ class ArticleCrawler(object):
 
         # 기사 URL 형식
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(
-            self.category.get(category_name)) + "&date="
+            self.categories.get(category_name)) + "&date="
         # start_year년 1월 ~ end_year의 end_mpnth 날짜까지 기사를 수집합니다.
         final_urlday = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], 1, self.date['end_month'])
         print(category_name + " Urls are generated")
@@ -133,7 +132,7 @@ class ArticleCrawler(object):
 
     def start(self):
         # MultiThread 크롤링 시작
-        for category_name in self.selected_category:
+        for category_name in self.selected_categories:
             proc = Process(target=self.crawling, args=(category_name,))
             proc.start()
 
