@@ -45,7 +45,7 @@ Crawler.start()
 ```
   2017년 1월 ~ 2018년 4월까지 정치, IT과학, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
   
-## Multi Thread 안내
+## Multi Process 안내
   intel i5 9600 cpu로 테스트 해본 결과 1개의 카테고리 당 평균 **8%** 의 cpu 점유율을 보였습니다.  
   크롤러를 실행하는 컴퓨터 사양에 맞게 카테고리 개수를 맞추시거나 반복문을 이용하시기 바랍니다.
   
@@ -113,7 +113,7 @@ Crawler.start()
 ```
  From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for political, IT science, global, and economic category news.
   
-## Multi Thread Information
+## Multi Process Information
 Testing with intel i5 9600 cpu showed an average ** 8% ** cpu share per category.  
 Please adjust the number of categories to match the specifications of the computer running the crawler, or use a loop.
   
