@@ -16,7 +16,7 @@ import re
 class ArticleCrawler(object):
     def __init__(self):
         self.parser = ArticleParser()
-        self.categories = {'Á¤Ä¡': 100, '°æÁ¦': 101, '»çÈ¸': 102, '»ıÈ°¹®È­': 103, 'IT°úÇĞ': 105}
+        self.categories = {'ì •ì¹˜': 100, 'ê²½ì œ': 101, 'ì‚¬íšŒ': 102, 'ìƒí™œë¬¸í™”': 103, 'ITê³¼í•™': 105}
         self.selected_categories = []
         self.date = {'start_year': 0, 'end_year': 0, 'end_month': 0}
 
@@ -55,13 +55,13 @@ class ArticleCrawler(object):
                     if len(str(month_day)) == 1:
                         month_day = "0" + str(month_day)
                     url = url + str(year) + str(month) + str(month_day)
-                    final_url = url  # page ³¯Â¥ Á¤º¸¸¸ ÀÖ°í page Á¤º¸°¡ ¾ø´Â url ÀÓ½Ã ÀúÀå
+                    final_url = url  # page ë‚ ì§œ ì •ë³´ë§Œ ìˆê³  page ì •ë³´ê°€ ì—†ëŠ” url ì„ì‹œ ì €ì¥
 
-                    # totalpage´Â ³×ÀÌ¹ö ÆäÀÌÁö ±¸Á¶¸¦ ÀÌ¿ëÇØ¼­ page=1000À¸·Î ÁöÁ¤ÇØ totalpage¸¦ ¾Ë¾Æ³¿
-                    # page=1000À» ÀÔ·ÂÇÒ °æ¿ì ÆäÀÌÁö°¡ Á¸ÀçÇÏÁö ¾Ê±â ¶§¹®¿¡ page=totalpage·Î ÀÌµ¿ µÊ
+                    # totalpageëŠ” ë„¤ì´ë²„ í˜ì´ì§€ êµ¬ì¡°ë¥¼ ì´ìš©í•´ì„œ page=1000ìœ¼ë¡œ ì§€ì •í•´ totalpageë¥¼ ì•Œì•„ëƒ„
+                    # page=1000ì„ ì…ë ¥í•  ê²½ìš° í˜ì´ì§€ê°€ ì¡´ì¬í•˜ì§€ ì•Šê¸° ë•Œë¬¸ì— page=totalpageë¡œ ì´ë™ ë¨
                     totalpage = self.parser.find_news_totalpage(final_url + "&page=1000")
                     for page in range(1, totalpage + 1):
-                        url = final_url  # url page ÃÊ±âÈ­
+                        url = final_url  # url page ì´ˆê¸°í™”
                         url = url + "&page=" + str(page)
                         maked_url.append(url)
         return maked_url
@@ -70,14 +70,14 @@ class ArticleCrawler(object):
         # MultiThread PID
         print(category_name + " PID: " + str(os.getpid()))
 
-        # °¢ Ä«Å×°í¸® ±â»ç ÀúÀå ÇÒ CSV
+        # ê° ì¹´í…Œê³ ë¦¬ ê¸°ì‚¬ ì €ì¥ í•  CSV
         file = open('Article_' + category_name + '.csv', 'w', encoding='euc_kr', newline='')
         wcsv = csv.writer(file)
 
-        # ±â»ç URL Çü½Ä
+        # ê¸°ì‚¬ URL í˜•ì‹
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(
             self.categories.get(category_name)) + "&date="
-        # start_year³â 1¿ù ~ end_yearÀÇ end_mpnth ³¯Â¥±îÁö ±â»ç¸¦ ¼öÁıÇÕ´Ï´Ù.
+        # start_yearë…„ 1ì›” ~ end_yearì˜ end_mpnth ë‚ ì§œê¹Œì§€ ê¸°ì‚¬ë¥¼ ìˆ˜ì§‘í•©ë‹ˆë‹¤.
         final_urlday = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], 1, self.date['end_month'])
         print(category_name + " Urls are generated")
         print("The crawler starts")
@@ -93,37 +93,37 @@ class ArticleCrawler(object):
 
             post = []
             for tag in tag_document:
-                post.append(tag.a.get('href'))  # ÇØ´çµÇ´Â page¿¡¼­ ¸ğµç ±â»çµéÀÇ URLÀ» post ¸®½ºÆ®¿¡ ³ÖÀ½
+                post.append(tag.a.get('href'))  # í•´ë‹¹ë˜ëŠ” pageì—ì„œ ëª¨ë“  ê¸°ì‚¬ë“¤ì˜ URLì„ post ë¦¬ìŠ¤íŠ¸ì— ë„£ìŒ
 
-            for content_url in post:  # ±â»ç URL
-                # Å©·Ñ¸µ ´ë±â ½Ã°£
+            for content_url in post:  # ê¸°ì‚¬ URL
+                # í¬ë¡¤ë§ ëŒ€ê¸° ì‹œê°„
                 sleep(0.01)
-                # ±â»ç HTML °¡Á®¿È
+                # ê¸°ì‚¬ HTML ê°€ì ¸ì˜´
                 request_content = requests.get(content_url)
                 document_content = BeautifulSoup(request_content.content, 'html.parser')
 
                 try:
-                    # ±â»ç Á¦¸ñ °¡Á®¿È
+                    # ê¸°ì‚¬ ì œëª© ê°€ì ¸ì˜´
                     tag_headline = document_content.find_all('h3', {'id': 'articleTitle'}, {'class': 'tts_head'})
-                    text_headline = ''  # ´º½º ±â»ç Á¦¸ñ ÃÊ±âÈ­
+                    text_headline = ''  # ë‰´ìŠ¤ ê¸°ì‚¬ ì œëª© ì´ˆê¸°í™”
                     text_headline = text_headline + self.parser.clear_headline(str(tag_headline[0].find_all(text=True)))
-                    if not text_headline:  # °ø¹éÀÏ °æ¿ì ±â»ç Á¦¿Ü Ã³¸®
+                    if not text_headline:  # ê³µë°±ì¼ ê²½ìš° ê¸°ì‚¬ ì œì™¸ ì²˜ë¦¬
                         continue
 
-                    # ±â»ç º»¹® °¡Á®¿È
+                    # ê¸°ì‚¬ ë³¸ë¬¸ ê°€ì ¸ì˜´
                     tag_content = document_content.find_all('div', {'id': 'articleBodyContents'})
-                    text_sentence = ''  # ´º½º ±â»ç º»¹® ÃÊ±âÈ­
+                    text_sentence = ''  # ë‰´ìŠ¤ ê¸°ì‚¬ ë³¸ë¬¸ ì´ˆê¸°í™”
                     text_sentence = text_sentence + self.parser.clear_content(str(tag_content[0].find_all(text=True)))
-                    if not text_sentence:  # °ø¹éÀÏ °æ¿ì ±â»ç Á¦¿Ü Ã³¸®
+                    if not text_sentence:  # ê³µë°±ì¼ ê²½ìš° ê¸°ì‚¬ ì œì™¸ ì²˜ë¦¬
                         continue
 
-                    # ±â»ç ¾ğ·Ğ»ç °¡Á®¿È
+                    # ê¸°ì‚¬ ì–¸ë¡ ì‚¬ ê°€ì ¸ì˜´
                     tag_company = document_content.find_all('meta', {'property': 'me2:category1'})
-                    text_company = ''  # ¾ğ·Ğ»ç ÃÊ±âÈ­
+                    text_company = ''  # ì–¸ë¡ ì‚¬ ì´ˆê¸°í™”
                     text_company = text_company + str(tag_company[0].get('content'))
-                    if not text_company:  # °ø¹éÀÏ °æ¿ì ±â»ç Á¦¿Ü Ã³¸®
+                    if not text_company:  # ê³µë°±ì¼ ê²½ìš° ê¸°ì‚¬ ì œì™¸ ì²˜ë¦¬
                         continue
-                    # CSV ÀÛ¼º
+                    # CSV ì‘ì„±
                     wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
 
                 except Exception as ex:  # UnicodeEncodeError ..
@@ -131,7 +131,7 @@ class ArticleCrawler(object):
         file.close()
 
     def start(self):
-        # MultiThread Å©·Ñ¸µ ½ÃÀÛ
+        # MultiProcess í¬ë¡¤ë§ ì‹œì‘
         for category_name in self.selected_categories:
             proc = Process(target=self.crawling, args=(category_name,))
             proc.start()
@@ -139,6 +139,6 @@ class ArticleCrawler(object):
 
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
-    Crawler.set_category("IT°úÇĞ", "»ıÈ°¹®È­")  # Á¤Ä¡, °æÁ¦, »ıÈ°¹®È­, IT°úÇĞ, »çÈ¸ Ä«Å×°í¸® »ç¿ë °¡´É
-    Crawler.set_date_range(2017, 2018, 4)  # 2017³â 1¿ùºÎÅÍ 2018³â 4¿ù±îÁö Å©·Ñ¸µ ½ÃÀÛ
+    Crawler.set_category("ITê³¼í•™", "ìƒí™œë¬¸í™”")  # ì •ì¹˜, ê²½ì œ, ìƒí™œë¬¸í™”, ITê³¼í•™, ì‚¬íšŒ ì¹´í…Œê³ ë¦¬ ì‚¬ìš© ê°€ëŠ¥
+    Crawler.set_date_range(2017, 2018, 4)  # 2017ë…„ 1ì›”ë¶€í„° 2018ë…„ 4ì›”ê¹Œì§€ í¬ë¡¤ë§ ì‹œì‘
     Crawler.start()
