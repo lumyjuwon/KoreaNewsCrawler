@@ -3,9 +3,9 @@
 
 from time import sleep
 from bs4 import BeautifulSoup
-from exceptions import *
 from multiprocessing import Process
-from articleparser import ArticleParser
+from KoreanNewsCrawler.exceptions import *
+from KoreanNewsCrawler.articleparser import ArticleParser
 import os
 import calendar
 import requests

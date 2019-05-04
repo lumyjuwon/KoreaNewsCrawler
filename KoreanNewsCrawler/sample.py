@@ -1,4 +1,4 @@
-from articlecrawler import ArticleCrawler
+from KoreanNewsCrawler.articlecrawler import ArticleCrawler
 
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
