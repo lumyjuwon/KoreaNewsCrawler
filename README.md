@@ -8,6 +8,10 @@
 **스포츠 기사는 현재 html 형식이 바껴 사용이 불가능 한 상태입니다. 빠른 시일내로 업데이트 하겠습니다.**  
 **2019년 3월 26일 '세계' 카테고리가 사라졌습니다.
 ## User Python Installation
+  * **KoreanNewsCrawler**
+
+    ``` pip install KoreanNewsCrawler ```
+    
   * **BeautifulSoup**
   
     ``` pip install beautifulsoup4 ```
@@ -24,7 +28,7 @@
  이 메서드는 수집하려고자 하는 카테고리는 설정하는 메서드입니다.  
  파라미터에 들어갈 수 있는 카테고리는 '정치', '경제', '사회', '생활문화', 'IT과학'입니다.  
  파라미터는 여러 개 들어갈 수 있습니다.  
- category_name: 정치, 경제, 사회, 생활문화, IT과학
+ category_name: 정치, 경제, 사회, 생활문화, IT과학 or politics, economy, society, living_culture, IT_science
   
 * **set_date_range(startyear, endyear, endmonth)**
   
@@ -36,7 +40,7 @@
   
 ## Example
 ```
-from articlecrawler import ArticleCrawler
+from korean_news_crawler.articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "economy")  
@@ -90,7 +94,7 @@ You should install as follow as
 * **set_category(category_name)**
  
  This method is setting categories that you want to crawl.  
- Categories that can be entered into parameters are 'politics', 'economy', 'society', 'lifeculture', 'IT/science'.  
+ Categories that can be entered into parameters are politics, economy, society, living_culture, IT_science. 
  Multiple parameters can be entered.
   
 * **set_date_range(startyear, endyear, endmonth)**
@@ -104,10 +108,10 @@ You should install as follow as
   
 ## Example
 ```
-from articlecrawler import ArticleCrawler
+from korean_news_crawler.articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
-Crawler.set_category("politics", "IT/science", "global", "economy")  
+Crawler.set_category("politics", "IT_science", "economy")  
 Crawler.set_date_range(2017, 2018, 4)  
 Crawler.start()
 ```
