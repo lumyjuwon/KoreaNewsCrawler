@@ -45,3 +45,7 @@ korean_news_crawler.egg-info/PKG-INFO
 korean_news_crawler.egg-info/requires.txt
 korean_news_crawler.egg-info/SOURCES.txt
 korean_news_crawler.egg-info/top_level.txt
+korea_news_crawler/__pycache__/exceptions.cpython-36.pyc
+korea_news_crawler/__pycache__/articleparser.cpython-36.pyc
+korea_news_crawler/__pycache__/articlecrawler.cpython-36.pyc
+.idea/KoreaNewsCrawler.iml
