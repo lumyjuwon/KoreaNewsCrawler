@@ -8,9 +8,9 @@
 **스포츠 기사는 현재 html 형식이 바껴 사용이 불가능 한 상태입니다. 빠른 시일내로 업데이트 하겠습니다.**  
 **2019년 3월 26일 '세계' 카테고리가 사라졌습니다.
 ## User Python Installation
-  * **KoreanNewsCrawler**
+  * **KoreaNewsCrawler**
 
-    ``` pip install KoreanNewsCrawler ```
+    ``` pip install KoreaNewsCrawler ```
 ## Method
 
 * **set_category(category_name)**
@@ -70,9 +70,9 @@ In the case of sports articles, that include Baseball, soccer, basketball, volle
 as soon as possible.**
 
 ## User Python Installation
-  * **KoreanNewsCrawler**
+  * **KoreaNewsCrawler**
 
-    ``` pip install KoreanNewsCrawler ```
+    ``` pip install KoreaNewsCrawler ```
     
 ## Method
 
