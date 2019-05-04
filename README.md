@@ -70,7 +70,6 @@ In the case of sports articles, that include Baseball, soccer, basketball, volle
 as soon as possible.**
 
 ## User Python Installation
-You should install as follow as
   * **KoreanNewsCrawler**
 
     ``` pip install korean_news_crawler ```
