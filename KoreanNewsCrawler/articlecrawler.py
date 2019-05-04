@@ -16,7 +16,8 @@ import re
 class ArticleCrawler(object):
     def __init__(self):
         self.parser = ArticleParser()
-        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, 'IT과학': 105}
+        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, 'IT과학': 105, 'politics': 100,
+                           'economy': 101, 'society': 102, 'living_culture': 103, 'IT_science': 105}
         self.selected_categories = []
         self.date = {'start_year': 0, 'end_year': 0, 'end_month': 0}
 
