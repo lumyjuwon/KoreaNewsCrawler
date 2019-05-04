@@ -72,7 +72,7 @@ as soon as possible.**
 ## User Python Installation
   * **KoreanNewsCrawler**
 
-    ``` pip install korean_news_crawler ```
+    ``` pip install KoreanNewsCrawler ```
     
 ## Method
 
