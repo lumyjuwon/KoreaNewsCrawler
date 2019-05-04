@@ -11,16 +11,6 @@
   * **KoreanNewsCrawler**
 
     ``` pip install KoreanNewsCrawler ```
-    
-  * **BeautifulSoup**
-  
-    ``` pip install beautifulsoup4 ```
-  
-  * **requests**
-  
-    ``` pip install requests ```  
-    
- 외부 라이브러리 설치가 필요합니다.
 ## Method
 
 * **set_category(category_name)**
@@ -84,14 +74,6 @@ You should install as follow as
   * **KoreanNewsCrawler**
 
     ``` pip install korean_news_crawler ```
-
-  * **BeautifulSoup**
-  
-    ``` pip install beautifulsoup4 ```
-  
-  * **requests**
-  
-    ``` pip install requests ```  
     
 ## Method
 
