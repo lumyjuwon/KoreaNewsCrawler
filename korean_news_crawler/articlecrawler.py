@@ -4,8 +4,8 @@
 from time import sleep
 from bs4 import BeautifulSoup
 from multiprocessing import Process
-from KoreanNewsCrawler.exceptions import *
-from KoreanNewsCrawler.articleparser import ArticleParser
+from korean_news_crawler.exceptions import *
+from korean_news_crawler.articleparser import ArticleParser
 import os
 import calendar
 import requests
@@ -16,8 +16,8 @@ import re
 class ArticleCrawler(object):
     def __init__(self):
         self.parser = ArticleParser()
-        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, 'IT과학': 105, 'politics': 100,
-                           'economy': 101, 'society': 102, 'living_culture': 103, 'IT_science': 105}
+        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, 'IT과학': 105,
+                           'politics': 100, 'economy': 101, 'society': 102, 'living_culture': 103, 'IT_science': 105}
         self.selected_categories = []
         self.date = {'start_year': 0, 'end_year': 0, 'end_month': 0}
 
