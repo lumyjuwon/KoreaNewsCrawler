@@ -81,6 +81,10 @@ as soon as possible.**
 
 ## User Python Installation
 You should install as follow as
+  * **KoreanNewsCrawler**
+
+    ``` pip install korean_news_crawler ```
+
   * **BeautifulSoup**
   
     ``` pip install beautifulsoup4 ```
