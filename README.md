@@ -30,7 +30,7 @@
   
 ## Example
 ```
-from korean_news_crawler.articlecrawler import ArticleCrawler
+from korea_news_crawler.articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "economy")  
@@ -93,7 +93,7 @@ as soon as possible.**
   
 ## Example
 ```
-from korean_news_crawler.articlecrawler import ArticleCrawler
+from korea_news_crawler.articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("politics", "IT_science", "economy")  
