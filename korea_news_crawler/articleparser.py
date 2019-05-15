@@ -5,14 +5,15 @@ import re
 
 class ArticleParser(object):
     def __init__(self):
-        self.special_symbol = re.compile('[\{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$%&n▲▶◆◀■\\\=\(\'\"]')
-        self.content_pattern = re.compile('본문 내용|TV플레이어| 동영상 뉴스|flash 오류를 우회하기 위한 함수 추가fuctio flashremoveCallback|tt|t|앵커 멘트|xa0')
-
+        self.special_symbol = re.compile('[\{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$&▲▶◆◀■【】\\\=\(\'\"]')
+        self.content_pattern = re.compile('본문 내용|TV플레이어| 동영상 뉴스|flash 오류를 우회하기 위한 함수 추가fuctio flashremoveCallback|tt|앵커 멘트|xa0')
+        
     def clear_content(self, text):
         # 기사 본문에서 필요없는 특수문자 및 본문 양식 등을 다 지움
-        special_symbol_removed_content = re.sub(self.special_symbol, '', text)
+        newline_symbol_removed_text = text.replace('\\n','').replace('\\t','')
+        special_symbol_removed_content = re.sub(self.special_symbol, ' ', newline_symbol_removed_text)
         end_phrase_removed_content = re.sub(self.content_pattern, '', special_symbol_removed_content)
-        blank_removed_content = end_phrase_removed_content.strip().replace('   ', '')  # 공백 에러 삭제
+        blank_removed_content = re.sub(' +', ' ',end_phrase_removed_content) # 공백 에러 삭제
         reversed_content = ''.join(reversed(blank_removed_content))  # 기사 내용을 reverse 한다.
         content = ''
         for i in range(0, len(blank_removed_content)):
