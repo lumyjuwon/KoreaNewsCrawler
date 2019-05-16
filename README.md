@@ -6,7 +6,6 @@
 스포츠 기사같은 경우 야구, 축구, 농구, 배구, 골프, 일반 스포츠, e스포츠입니다.  
 
 **스포츠 기사는 현재 html 형식이 바껴 사용이 불가능 한 상태입니다. 빠른 시일내로 업데이트 하겠습니다.**  
-**2019년 3월 26일 '세계' 카테고리가 사라졌습니다.
 ## User Python Installation
   * **KoreaNewsCrawler**
 
@@ -50,10 +49,10 @@ Crawler.start()
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
  Colum A: 기사 날짜  
- Colum B: 기사 제목  
- Colum C: 기사 본문 내용  
- Colum D: 언론사  
- Colum E: 기사 카테고리  
+ Colum B: 기사 카테고리  
+ Colum C: 언론사  
+ Colum D: 기사 제목  
+ Colum E: 기사 본문  
  Colum F: 기사 주소  
  
  수집한 모든 데이터는 csv 확장자로 저장됩니다.  
@@ -113,10 +112,10 @@ Please adjust the number of categories to match the specifications of the comput
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
  Colum A: Article Date  
- Colum B: Article headline  
- Colum C: Article main text  
- Colum D: The press  
- Colum E: Article Category  
+ Colum B: Article Category  
+ Colum C: Article Press  
+ Colum D: Article headline  
+ Colum E: Article Content  
  Colum F: Article URL  
  
  All collected data is saved as a csv.
