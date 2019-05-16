@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8, euc-kr -*-
 
 from time import sleep
 from bs4 import BeautifulSoup
@@ -7,6 +7,7 @@ from multiprocessing import Process
 from korea_news_crawler.exceptions import *
 from korea_news_crawler.articleparser import ArticleParser
 import os
+import platform
 import calendar
 import requests
 import csv
@@ -20,6 +21,7 @@ class ArticleCrawler(object):
                            'politics': 100, 'economy': 101, 'society': 102, 'living_culture': 103, 'world': 104, 'IT_science': 105}
         self.selected_categories = []
         self.date = {'start_year': 0, 'start_month': 0, 'end_year': 0, 'end_month': 0}
+        self.user_operating_system = str(platform.system())
 
     def set_category(self, *args):
         for key in args:
@@ -35,6 +37,8 @@ class ArticleCrawler(object):
             raise InvalidMonth(start_month)
         if end_month < 1 or end_month > 12:
             raise InvalidMonth(end_month)
+        if start_month > end_month:
+            raise OverbalanceMonth(start_month, end_month)
         for key, date in zip(self.date, args):
             self.date[key] = date
         print(self.date)
@@ -87,14 +91,18 @@ class ArticleCrawler(object):
             save_endmonth = str(self.date['end_month'])
         
         # 각 카테고리 기사 저장 할 CSV
-        file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth\
-                    + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='utf-8', newline='')
+        # Windows use euc-kr
+        if self.user_operating_system == "Windows":
+            file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth
+                        + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='euc-kr', newline='')
+        else:
+            file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth
+                        + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='utf-8', newline='')
         wcsv = csv.writer(file)
         del save_startmonth, save_endmonth
 
         # 기사 URL 형식
-        url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(
-            self.categories.get(category_name)) + "&date="
+        url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.categories.get(category_name)) + "&date="
         # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
         final_urlday = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], self.date['start_month'], self.date['end_month'])
         print(category_name + " Urls are generated")
@@ -145,7 +153,7 @@ class ArticleCrawler(object):
                     tag_company = document_content.find_all('meta', {'property': 'me2:category1'})
                     text_company = ''  # 언론사 초기화
                     text_company = text_company + str(tag_company[0].get('content'))
-                    if not text_company:  # 공백일 경우 기사 제외 처리 굳.
+                    if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
                     # CSV 작성
                     wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
@@ -156,7 +164,7 @@ class ArticleCrawler(object):
                     del request_content, document_content
 
                 except Exception as ex:  # UnicodeEncodeError ..
-                    wcsv.writerow([ex, content_url])
+                    # wcsv.writerow([ex, content_url])
                     del request_content, document_content
                     pass
         file.close()
@@ -170,6 +178,6 @@ class ArticleCrawler(object):
 
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
-    Crawler.set_category("생활문화","IT과학")  # 정치, 경제, 생활문화, IT과학, 세계, 사회 카테고리 사용 가능
-    Crawler.set_date_range(2017, 1, 2018, 4)  # 2017년 1월부터 2018년 4월까지 크롤링 시작
+    Crawler.set_category("생활문화", "IT과학")
+    Crawler.set_date_range(2017, 1, 2017, 1)
     Crawler.start()

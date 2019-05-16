@@ -49,3 +49,15 @@ korea_news_crawler/__pycache__/exceptions.cpython-36.pyc
 korea_news_crawler/__pycache__/articleparser.cpython-36.pyc
 korea_news_crawler/__pycache__/articlecrawler.cpython-36.pyc
 .idea/KoreaNewsCrawler.iml
+build/lib/korea_news_crawler/articlecrawler.py
+build/lib/korea_news_crawler/articleparser.py
+build/lib/korea_news_crawler/exceptions.py
+build/lib/korea_news_crawler/sample.py
+build/lib/korea_news_crawler/sportcrawler.py
+dist/KoreaNewsCrawler-1.0-py3-none-any.whl
+KoreaNewsCrawler.egg-info/dependency_links.txt
+KoreaNewsCrawler.egg-info/not-zip-safe
+KoreaNewsCrawler.egg-info/PKG-INFO
+KoreaNewsCrawler.egg-info/requires.txt
+KoreaNewsCrawler.egg-info/SOURCES.txt
+KoreaNewsCrawler.egg-info/top_level.txt
