@@ -21,7 +21,7 @@
   
 * **set_date_range(startyear, startmonth, endyear, endmonth)**
   
- 이 메서드는 수집하려고자 하는 뉴스의 기간을 의미합니다. 기본적으로 1월달부터 endmonth월까지 데이터를 수집합니다.
+ 이 메서드는 수집하려고자 하는 뉴스의 기간을 의미합니다. 기본적으로 startmonth월부터 endmonth월까지 데이터를 수집합니다.
   
 * **start()**
   
@@ -84,7 +84,7 @@ as soon as possible.**
 * **set_date_range(startyear, startmonth, endyear, endmonth)**
   
  This method represents the duration of the news you want to collect.  
- By default, data is collected from January to endmonth month.
+ Data is collected from startmonth to endmonth.
   
 * **start()**
  
