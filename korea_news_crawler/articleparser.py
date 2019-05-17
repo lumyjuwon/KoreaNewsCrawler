@@ -25,7 +25,8 @@ class ArticleParser(object):
 
     def clear_headline(self, text):
         # 기사 제목에서 필요없는 특수문자들을 지움
-        special_symbol_removed_headline = re.sub(self.special_symbol, '', text)
+        newline_symbol_removed_text = text.replace('\\n', '').replace('\\t', '')
+        special_symbol_removed_headline = re.sub(self.special_symbol, '', newline_symbol_removed_text)
         return special_symbol_removed_headline
 
     def find_news_totalpage(self, url):
