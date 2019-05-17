@@ -19,7 +19,7 @@
  파라미터는 여러 개 들어갈 수 있습니다.  
  category_name: 정치, 경제, 사회, 생활문화, IT과학 or politics, economy, society, living_culture, IT_science
   
-* **set_date_range(startyear, endyear, endmonth)**
+* **set_date_range(startyear, startmonth, endyear, endmonth)**
   
  이 메서드는 수집하려고자 하는 뉴스의 기간을 의미합니다. 기본적으로 1월달부터 endmonth월까지 데이터를 수집합니다.
   
