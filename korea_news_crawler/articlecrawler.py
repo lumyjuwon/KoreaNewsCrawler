@@ -66,18 +66,19 @@ class ArticleCrawler(object):
                         month = "0" + str(month)
                     if len(str(month_day)) == 1:
                         month_day = "0" + str(month_day)
-                    # page 날짜 정보만 있고 page 정보가 없는 url 저장
+                        
+                    # 날짜별로 Page Url 생성
                     url = category_url + str(year) + str(month) + str(month_day)
 
                     # totalpage는 네이버 페이지 구조를 이용해서 page=10000으로 지정해 totalpage를 알아냄
-                    # page=10000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨
+                    # page=10000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨 (Redirect)
                     totalpage = self.parser.find_news_totalpage(url + "&page=10000")
                     for page in range(1, totalpage + 1):
                         made_url.append(url + "&page=" + str(page))
         return made_url
 
     def crawling(self, category_name):
-        # MultiThread PID
+        # Multi Process PID
         print(category_name + " PID: " + str(os.getpid()))    
         
         # csv 파일 이름에 들어갈 month 자릿수 맞추기
@@ -91,10 +92,11 @@ class ArticleCrawler(object):
             save_endmonth = str(self.date['end_month'])
         
         # 각 카테고리 기사 저장 할 CSV
-        # Windows use euc-kr
+        # Windows uses euc-kr
         if self.user_operating_system == "Windows":
             file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth
                         + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='euc-kr', newline='')
+        # Other OS uses utf-8
         else:
             file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth
                         + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='utf-8', newline='')
@@ -130,6 +132,7 @@ class ArticleCrawler(object):
             for content_url in post:  # 기사 URL
                 # 크롤링 대기 시간
                 sleep(0.01)
+                
                 # 기사 HTML 가져옴
                 request_content = requests.get(content_url)
                 document_content = BeautifulSoup(request_content.content, 'html.parser')
@@ -155,6 +158,7 @@ class ArticleCrawler(object):
                     text_company = text_company + str(tag_company[0].get('content'))
                     if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
+                        
                     # CSV 작성
                     wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
                     
