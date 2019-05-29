@@ -17,8 +17,8 @@ import re
 class ArticleCrawler(object):
     def __init__(self):
         self.parser = ArticleParser()
-        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105,
-                           'politics': 100, 'economy': 101, 'society': 102, 'living_culture': 103, 'world': 104, 'IT_science': 105}
+        self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105, '오피니언': 110,
+                           'politics': 100, 'economy': 101, 'society': 102, 'living_culture': 103, 'world': 104, 'IT_science': 105, 'opinion': 110}
         self.selected_categories = []
         self.date = {'start_year': 0, 'start_month': 0, 'end_year': 0, 'end_month': 0}
         self.user_operating_system = str(platform.system())
@@ -179,5 +179,5 @@ class ArticleCrawler(object):
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
     Crawler.set_category("생활문화", "IT과학")
-    Crawler.set_date_range(2017, 1, 2017, 1)
+    Crawler.set_date_range(2017, 1, 2018, 4)
     Crawler.start()
