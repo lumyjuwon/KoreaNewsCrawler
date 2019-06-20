@@ -42,6 +42,7 @@ class ArticleCrawler(object):
             self.date[key] = date
         print(self.date)
 
+    @staticmethod
     def make_news_page_url(self, category_url, start_year, end_year, start_month, end_month):
         made_url = []
         for year in range(start_year, end_year + 1):
