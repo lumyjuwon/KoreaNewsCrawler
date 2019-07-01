@@ -37,7 +37,7 @@ class ArticleCrawler(object):
             raise InvalidMonth(start_month)
         if end_month < 1 or end_month > 12:
             raise InvalidMonth(end_month)
-        if start_month > end_month:
+        if start_year == end_year and start_month > end_month:
             raise OverbalanceMonth(start_month, end_month)
         for key, date in zip(self.date, args):
             self.date[key] = date
