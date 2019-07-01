@@ -6,17 +6,16 @@ from bs4 import BeautifulSoup
 from multiprocessing import Process
 from korea_news_crawler.exceptions import *
 from korea_news_crawler.articleparser import ArticleParser
+from korea_news_crawler.writer import Writer
 import os
 import platform
 import calendar
 import requests
-import csv
 import re
 
 
 class ArticleCrawler(object):
     def __init__(self):
-        self.parser = ArticleParser()
         self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105, '오피니언': 110,
                            'politics': 100, 'economy': 101, 'society': 102, 'living_culture': 103, 'world': 104, 'IT_science': 105, 'opinion': 110}
         self.selected_categories = []
@@ -43,6 +42,7 @@ class ArticleCrawler(object):
             self.date[key] = date
         print(self.date)
 
+    @staticmethod
     def make_news_page_url(self, category_url, start_year, end_year, start_month, end_month):
         made_url = []
         for year in range(start_year, end_year + 1):
@@ -66,43 +66,26 @@ class ArticleCrawler(object):
                         month = "0" + str(month)
                     if len(str(month_day)) == 1:
                         month_day = "0" + str(month_day)
-                    # page 날짜 정보만 있고 page 정보가 없는 url 저장
+                        
+                    # 날짜별로 Page Url 생성
                     url = category_url + str(year) + str(month) + str(month_day)
 
                     # totalpage는 네이버 페이지 구조를 이용해서 page=10000으로 지정해 totalpage를 알아냄
-                    # page=10000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨
-                    totalpage = self.parser.find_news_totalpage(url + "&page=10000")
+                    # page=10000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨 (Redirect)
+                    totalpage = ArticleParser.find_news_totalpage(url + "&page=10000")
                     for page in range(1, totalpage + 1):
                         made_url.append(url + "&page=" + str(page))
         return made_url
 
     def crawling(self, category_name):
-        # MultiThread PID
+        # Multi Process PID
         print(category_name + " PID: " + str(os.getpid()))    
-        
-        # csv 파일 이름에 들어갈 month 자릿수 맞추기
-        if len(str(self.date['start_month'])) == 1:
-            save_startmonth = "0" + str(self.date['start_month'])
-        else:
-            save_startmonth = str(self.date['start_month'])
-        if len(str(self.date['end_month'])) == 1:
-            save_endmonth = "0" + str(self.date['end_month'])
-        else:
-            save_endmonth = str(self.date['end_month'])
-        
-        # 각 카테고리 기사 저장 할 CSV
-        # Windows use euc-kr
-        if self.user_operating_system == "Windows":
-            file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth
-                        + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='euc-kr', newline='')
-        else:
-            file = open('Article_' + category_name + '_' + str(self.date['start_year']) + save_startmonth
-                        + '_' + str(self.date['end_year']) + save_endmonth + '.csv', 'w', encoding='utf-8', newline='')
-        wcsv = csv.writer(file)
-        del save_startmonth, save_endmonth
+
+        writer_csv = Writer(category_name=category_name, date=self.date).get_wcsv()
 
         # 기사 URL 형식
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.categories.get(category_name)) + "&date="
+
         # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
         final_urlday = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], self.date['start_month'], self.date['end_month'])
         print(category_name + " Urls are generated")
@@ -130,6 +113,7 @@ class ArticleCrawler(object):
             for content_url in post:  # 기사 URL
                 # 크롤링 대기 시간
                 sleep(0.01)
+                
                 # 기사 HTML 가져옴
                 request_content = requests.get(content_url)
                 document_content = BeautifulSoup(request_content.content, 'html.parser')
@@ -138,14 +122,14 @@ class ArticleCrawler(object):
                     # 기사 제목 가져옴
                     tag_headline = document_content.find_all('h3', {'id': 'articleTitle'}, {'class': 'tts_head'})
                     text_headline = ''  # 뉴스 기사 제목 초기화
-                    text_headline = text_headline + self.parser.clear_headline(str(tag_headline[0].find_all(text=True)))
+                    text_headline = text_headline + ArticleParser.clear_headline(str(tag_headline[0].find_all(text=True)))
                     if not text_headline:  # 공백일 경우 기사 제외 처리
                         continue
 
                     # 기사 본문 가져옴
                     tag_content = document_content.find_all('div', {'id': 'articleBodyContents'})
                     text_sentence = ''  # 뉴스 기사 본문 초기화
-                    text_sentence = text_sentence + self.parser.clear_content(str(tag_content[0].find_all(text=True)))
+                    text_sentence = text_sentence + ArticleParser.clear_content(str(tag_content[0].find_all(text=True)))
                     if not text_sentence:  # 공백일 경우 기사 제외 처리
                         continue
 
@@ -155,8 +139,9 @@ class ArticleCrawler(object):
                     text_company = text_company + str(tag_company[0].get('content'))
                     if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
+                        
                     # CSV 작성
-                    wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
+                    writer_csv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
                     
                     del text_company, text_sentence, text_headline
                     del tag_company 
@@ -167,7 +152,7 @@ class ArticleCrawler(object):
                     # wcsv.writerow([ex, content_url])
                     del request_content, document_content
                     pass
-        file.close()
+        writer_csv.close()
 
     def start(self):
         # MultiProcess 크롤링 시작
