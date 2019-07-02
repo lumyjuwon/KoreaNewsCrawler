@@ -43,8 +43,8 @@ class ArticleCrawler(object):
         print(self.date)
 
     @staticmethod
-    def make_news_page_url(self, category_url, start_year, end_year, start_month, end_month):
-        made_url = []
+    def make_news_page_url(category_url, start_year, end_year, start_month, end_month):
+        made_urls = []
         for year in range(start_year, end_year + 1):
             if start_year == end_year:
                 year_startmonth = start_month
@@ -74,8 +74,8 @@ class ArticleCrawler(object):
                     # page=10000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨 (Redirect)
                     totalpage = ArticleParser.find_news_totalpage(url + "&page=10000")
                     for page in range(1, totalpage + 1):
-                        made_url.append(url + "&page=" + str(page))
-        return made_url
+                        made_urls.append(url + "&page=" + str(page))
+        return made_urls
 
     def crawling(self, category_name):
         # Multi Process PID
@@ -87,11 +87,11 @@ class ArticleCrawler(object):
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.categories.get(category_name)) + "&date="
 
         # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
-        final_urlday = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], self.date['start_month'], self.date['end_month'])
+        day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], self.date['start_month'], self.date['end_month'])
         print(category_name + " Urls are generated")
         print("The crawler starts")
 
-        for URL in final_urlday:
+        for URL in day_urls:
 
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
