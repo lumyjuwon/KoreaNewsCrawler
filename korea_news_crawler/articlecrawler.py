@@ -81,7 +81,7 @@ class ArticleCrawler(object):
         # Multi Process PID
         print(category_name + " PID: " + str(os.getpid()))    
 
-        writer_csv = Writer(category_name=category_name, date=self.date).get_wcsv()
+        writer = Writer(category_name=category_name, date=self.date)
 
         # 기사 URL 형식
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.categories.get(category_name)) + "&date="
@@ -141,7 +141,8 @@ class ArticleCrawler(object):
                         continue
                         
                     # CSV 작성
-                    writer_csv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
+                    wcsv = writer.get_wcsv()
+                    wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
                     
                     del text_company, text_sentence, text_headline
                     del tag_company 
@@ -152,7 +153,7 @@ class ArticleCrawler(object):
                     # wcsv.writerow([ex, content_url])
                     del request_content, document_content
                     pass
-        writer_csv.close()
+        writer.close()
 
     def start(self):
         # MultiProcess 크롤링 시작
