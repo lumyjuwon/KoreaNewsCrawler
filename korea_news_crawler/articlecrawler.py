@@ -127,7 +127,10 @@ class ArticleCrawler(object):
                 
                 # 기사 HTML 가져옴
                 request_content = self.get_url_data(content_url)
-                document_content = BeautifulSoup(request_content.content, 'html.parser')
+                try:
+                    document_content = BeautifulSoup(request_content.content, 'html.parser')
+                except:
+                    continue
 
                 try:
                     # 기사 제목 가져옴
