@@ -76,6 +76,16 @@ class ArticleCrawler(object):
                     for page in range(1, totalpage + 1):
                         made_urls.append(url + "&page=" + str(page))
         return made_urls
+    
+    def get_url_data(self, url, max_tries=10):
+        remaining_tries = int(max_tries)
+        while remaining_tries > 0:
+            try:
+                return requests.get(url)
+            except requests.exceptions:
+                time.sleep(60)
+            remaining_tries = remaining_tries - 1
+        raise Exception("Couldn't get the data.")
 
     def crawling(self, category_name):
         # Multi Process PID
@@ -96,7 +106,8 @@ class ArticleCrawler(object):
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
 
-            request = requests.get(URL)
+            request = self.get_url_data(URL)
+
             document = BeautifulSoup(request.content, 'html.parser')
 
             # html - newsflash_body - type06_headline, type06
@@ -115,7 +126,7 @@ class ArticleCrawler(object):
                 sleep(0.01)
                 
                 # 기사 HTML 가져옴
-                request_content = requests.get(content_url)
+                request_content = self.get_url_data(content_url)
                 document_content = BeautifulSoup(request_content.content, 'html.parser')
 
                 try:
