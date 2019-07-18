@@ -41,7 +41,7 @@ class Writer(object):
                              + '_' + str(self.save_end_year) + self.save_end_month + '.csv', 'w', encoding='utf-8',
                              newline='')
 
-    def get_wcsv(self):
+    def get_writer_csv(self):
         return self.wcsv
 
     def close(self):
