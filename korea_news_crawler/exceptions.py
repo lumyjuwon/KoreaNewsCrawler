@@ -57,7 +57,15 @@ class OverbalanceMonth(Exception):
     def __init__(self, start_month, end_month):
         self.start_month = start_month
         self.end_month = end_month
-        self.message = "start_month(" + str(self.start_month) + ") is an overbalance with end_month" + "(" +  str(self.end_month) + ")"
+        self.message = "start_month(" + str(self.start_month) + ") is an overbalance with end_month" + "(" + str(self.end_month) + ")"
+
+    def __str__(self):
+        return str(self.message)
+
+
+class ResponseTimeout(Exception):
+    def __init__(self):
+        self.message = "Couldn't get the data"
 
     def __str__(self):
         return str(self.message)

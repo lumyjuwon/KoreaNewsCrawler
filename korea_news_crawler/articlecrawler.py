@@ -86,7 +86,7 @@ class ArticleCrawler(object):
             except requests.exceptions:
                 sleep(60)
             remaining_tries = remaining_tries - 1
-        raise Exception("Couldn't get the data.")
+        raise ResponseTimeout()
 
     def crawling(self, category_name):
         # Multi Process PID
@@ -156,7 +156,7 @@ class ArticleCrawler(object):
                         continue
                         
                     # CSV 작성
-                    wcsv = writer.get_wcsv()
+                    wcsv = writer.get_writer_csv()
                     wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
                     
                     del text_company, text_sentence, text_headline
