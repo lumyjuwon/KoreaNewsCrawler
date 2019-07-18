@@ -76,14 +76,15 @@ class ArticleCrawler(object):
                     for page in range(1, totalpage + 1):
                         made_urls.append(url + "&page=" + str(page))
         return made_urls
-    
-    def get_url_data(self, url, max_tries=10):
+
+    @staticmethod
+    def get_url_data(url, max_tries=10):
         remaining_tries = int(max_tries)
         while remaining_tries > 0:
             try:
                 return requests.get(url)
             except requests.exceptions:
-                time.sleep(60)
+                sleep(60)
             remaining_tries = remaining_tries - 1
         raise Exception("Couldn't get the data.")
 
