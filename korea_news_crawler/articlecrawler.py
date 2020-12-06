@@ -106,7 +106,6 @@ class ArticleCrawler(object):
         print("The crawler starts")
 
         for URL in day_urls:
-            print("now for.. ", URL)
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
 
