@@ -46,4 +46,3 @@ class Writer(object):
 
     def close(self):
         self.file.close()
-
