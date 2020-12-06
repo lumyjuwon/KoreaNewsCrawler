@@ -106,7 +106,7 @@ class ArticleCrawler(object):
         print("The crawler starts")
 
         for URL in day_urls:
-
+            print("now for.. ", URL)
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
 
@@ -130,6 +130,8 @@ class ArticleCrawler(object):
                 
                 # 기사 HTML 가져옴
                 request_content = self.get_url_data(content_url)
+                request_content2 = requests.get(content_url,headers={'User-Agent':'Mozilla/5.0'})
+
                 try:
                     document_content = BeautifulSoup(request_content.content, 'html.parser')
                 except:
@@ -156,11 +158,14 @@ class ArticleCrawler(object):
                     text_company = text_company + str(tag_company[0].get('content'))
                     if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
-                        
+                    #기사 시간대 가져옴
+                    time = re.findall('<span class="t11">(.*)</span>',request_content2.text)[0]
                     # CSV 작성
+
                     wcsv = writer.get_writer_csv()
-                    wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
-                    
+                    wcsv.writerow([time, category_name, text_company, text_headline, text_sentence, content_url])
+
+                    del time
                     del text_company, text_sentence, text_headline
                     del tag_company 
                     del tag_content, tag_headline
@@ -181,6 +186,6 @@ class ArticleCrawler(object):
 
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
-    Crawler.set_category("생활문화")
-    Crawler.set_date_range(2020, 12, 2020, 12)
+    Crawler.set_category('생활문화','경제')
+    Crawler.set_date_range(2017, 4, 2018, 1)
     Crawler.start()
