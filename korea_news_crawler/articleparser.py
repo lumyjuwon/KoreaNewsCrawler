@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-
+import random
 
 class ArticleParser(object):
     special_symbol = re.compile('[\{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$&▲▶◆◀■【】\\\=\(\'\"]')
@@ -32,14 +32,21 @@ class ArticleParser(object):
 
     @classmethod
     def find_news_totalpage(cls, url):
-        # 당일 기사 목록 전체를 알아냄
         try:
-            totlapage_url = url
-            request_content = requests.get(totlapage_url)
+            totalpage_url = url
+            headers1 = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
+            headers2 = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit 537.36 (KHTML, like Gecko) Chrome",
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"}
+            if random.randint(0,1):
+                headers = headers1
+            else:
+                headers = headers2
+            request_content = requests.get(totalpage_url, headers=headers)
             document_content = BeautifulSoup(request_content.content, 'html.parser')
             headline_tag = document_content.find('div', {'class': 'paging'}).find('strong')
             regex = re.compile(r'<strong>(?P<num>\d+)')
             match = regex.findall(str(headline_tag))
             return int(match[0])
-        except Exception:
+        except Exception as err:
+            print(err)
             return 0
