@@ -1,33 +1,46 @@
-# KoreaNewsCrawler
+# KoreaNewsCrawler 프로젝트 기여 - OSS 6조
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-이 크롤러는 네이버 포털에 올라오는 언론사 뉴스 기사들을 크롤링 해주는 크롤러입니다.  
-크롤링 가능한 기사 카테고리는 정치, 경제, 생활문화, IT과학, 사회, 세계, 오피니언입니다.  
-스포츠 기사같은 경우 야구, 축구, 농구, 배구, 골프, 일반 스포츠, e스포츠입니다.  
+네이버 포털의 올라오는 기사들을 크롤링 해주는 크롤러로, **(네이버 포털 외의 기사들을 크롤링하는 기능도 추가할 예정입니다.)**  
+크롤링 가능한 기사 카테고리는 정치, 경제, 생활문화, IT과학, 사회, 세계, 오피니언, 연합뉴스속보 입니다.  
+**(기사 카테고리를 더 명확히 하기 위해 병합/삭제/수정을 할 예정입니다.)**  
 
-**스포츠 기사는 현재 html 형식이 바껴 사용이 불가능 한 상태입니다. 빠른 시일내로 업데이트 하겠습니다.**  
-  
-**스포츠 관련 기사 크롤링 도움을 주실 수 있으신 분을 찾습니다 깃허브에 issue 또는 lumyjuwon@gmail.com로 이메일 주시면 감사하겠습니다**  
-## User Python Installation
-  * **KoreaNewsCrawler**
+## 관련 외부링크
 
-    ``` pip install KoreaNewsCrawler ```
+[KoreaNewsCrawler_github_홈페이지](https://github.com/lumyjuwon/KoreaNewsCrawler)  
+[OSS_6조_static_page_](https://20-2-skku-oss.github.io/2020-2-OSS-6/)
+
+## For comfortable
+
+* **사용자가 카테고리/기간을 실행창에서 입력하는 기능**  
+
+ **sample.py코드에 기간과 카테고리를 직접 바꿔야하는 번거로움을 제거했습니다.**
+
+* **원하는 키워드가 포함된 제목의 기사들을 크롤링하는 기능**
+ 
+ **사용자가 기간/카테고리/원하는 키워드를 입력하면 그 키워드가 포함된 제목의 기사들만 크롤링하는 기능을 추가하였습니다.**
+ 
+* **원하는 키워드가 포함된 내용의 기사들을 크롤링하는 코드 추가**
+
+ **파일명을 입력하고, 원하는 키워드를 입력하면 그 키워드가 포함된 기사가 csv파일의 몇 번째 줄에 있는지 출력하는 코드를 추가하였습니다.**
+
 ## Method
 
 * **set_category(category_name)**
   
  이 메서드는 수집하려고자 하는 카테고리는 설정하는 메서드입니다.  
- 파라미터에 들어갈 수 있는 카테고리는 '정치', '경제', '사회', '생활문화', 'IT과학', '세계', '오피니언'입니다.  
+ 파라미터에 들어갈 수 있는 카테고리는 '정치', '경제', '사회', '생활문화', 'IT과학', '세계', '오피니언','연합뉴스속보'입니다.  
  파라미터는 여러 개 들어갈 수 있습니다.  
- category_name: 정치, 경제, 사회, 생활문화, IT과학, 세계, 오피니언 or politics, economy, society, living_culture, IT_science, world, opinion
+ category_name: 정치, 경제, 사회, 생활문화, IT과학, 세계, 오피니언, 연합뉴스속보 or politics, economy, society, living_culture, IT_science, world, opinion, Yeonhap Newsflash
   
 * **set_date_range(startyear, startmonth, endyear, endmonth)**
   
  이 메서드는 수집하려고자 하는 뉴스의 기간을 의미합니다. 기본적으로 startmonth월부터 endmonth월까지 데이터를 수집합니다.
   
-* **start()**
+* **start(isMultiProc)**
   
  이 메서드는 크롤링 실행 메서드입니다.
+ > 2020-12-06 Edited : 실행 메서드에 멀티 프로세싱 여부를 선택할 수 있게 하는 argument를 추가했습니다. 멀티 프로세싱을 적용하고자 할 때, True Boolean을 전달하면 됩니다.
   
 ## Example
 ```
@@ -46,6 +59,9 @@ Crawler.start()
   
   ![ex_screenshot](./img/multi_process.PNG)
   
+   > 2020-12-06 Edited : start() 메서드에 멀티 프로세싱 여부를 선택할 수 있게 하는 argument를 추가했습니다. 
+   >    > 멀티 프로세싱을 적용하지 않으면, 크롤링 실행 도중 진행상황을 출력되는 csv파일에서 확인할 수 있습니다.
+      
 ## Results
  ![ex_screenshot](./img/article_result.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
@@ -80,7 +96,7 @@ as soon as possible.**
 * **set_category(category_name)**
  
  This method is setting categories that you want to crawl.  
- Categories that can be entered into parameters are politics, economy, society, living_culture, IT_science. 
+ Categories that can be entered into parameters are politics, economy, society, living_culture, IT_science, and Yeonhap Newsflash. 
  Multiple parameters can be entered.
   
 * **set_date_range(startyear, startmonth, endyear, endmonth)**
@@ -88,9 +104,10 @@ as soon as possible.**
  This method represents the duration of the news you want to collect.  
  Data is collected from startmonth to endmonth.
   
-* **start()**
- 
+* **start(isMultiProc)**
+  
  This method is the crawl execution method.
+ > 2020-12-06 Edited : MultiProcessing option is now added to exectution method. You should set 'isMultiProc' as True when it required.
   
 ## Example
 ```
@@ -108,7 +125,10 @@ Testing with intel i5 9600 cpu showed an average ** 8% ** cpu share per category
 Please adjust the number of categories to match the specifications of the computer running the crawler, or use a loop.
   
   ![ex_screenshot](./img/multi_process.PNG)
-  
+     
+   > 2020-12-06 Edited : MultiProcessing option is now added to method 'start()'.
+   >    > When multiprocessing turns off, you can check the csv file from ongoing crwaler's result.
+      
 ## Results
  ![ex_screenshot](./img/article_result.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
