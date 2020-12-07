@@ -25,14 +25,13 @@ class SportCrawler:
 
 
     def content(self, html_document, url_label):
-        label = url_label
         content_match = []
         Tag = html_document.find_all('script', {'type': 'text/javascript'})
         Tag_ = re.sub(',"officeName', '\nofficeName', str(Tag))
         regex = re.compile('oid":"(?P<oid>\d+)","aid":"(?P<aid>\d+)"')
         content = regex.findall(Tag_)
         for oid_aid in content:
-            maked_url = "https://sports.news.naver.com/" + label + "/news/read.nhn?oid=" + oid_aid[0] + "&aid=" + \
+            maked_url = "https://sports.news.naver.com/" + url_label + "/news/read.nhn?oid=" + oid_aid[0] + "&aid=" + \
                         oid_aid[1]
             content_match.append(maked_url)
         return content_match
@@ -51,7 +50,7 @@ class SportCrawler:
 
                 cleared_content = ''.join(reversed(reverse_content[i:]))
                 break
-        cleared_content=re.sub('if deployPhase(.*)displayRMCPlayer ','',cleared_content)
+        cleared_content = re.sub('if deployPhase(.*)displayRMCPlayer ','',cleared_content)
         return cleared_content
 
     def Clearheadline(self, text):
@@ -76,13 +75,13 @@ class SportCrawler:
                         Month = "0" + str(Month)
                     if len(str(Month_Day)) == 1:
                         Month_Day = "0" + str(Month_Day)
-                    url = url + str(year) + str(Month) + str(Month_Day)
+                    url = f'{url}{year}{Month}{Month_Day}'
                     final_url = url  # page 날짜 정보만 있고 page 정보가 없는 url 임시 저장
 
                     totalpage = self.javascript_totalpage(url)  # TotalPage 확인
                     for page in range(1, totalpage + 1):
                         url = final_url  # url page 초기화
-                        url = url + "&page=" + str(page)
+                        url = f'{url}&page={page}'
                         Maked_url.append(url)  # [[page1,page2,page3 ....]
         return Maked_url
     def crawling(self, category_name):
@@ -94,30 +93,31 @@ class SportCrawler:
 
         officename_script = []
         completed_content_match = []
-        timescript=[]
+        timescript = []
         for url_label in Url_category:  # URL 카테고리. Multiprocessing시 어차피 1번 도는거라 refactoring할 필요 있어보임
             category = Category[Url_category.index(url_label)]  # URL 인덱스와 Category 인덱스가 일치할 경우 그 값도 일치
-            url = "https://sports.news.naver.com/" + url_label + "/news/list.nhn?isphoto=N&view=photo&date="
+            url = f'https://sports.news.naver.com/{url_label}/news/list.nhn?isphoto=N&view=photo&date='
             final_urlday = self.Make_url(url,self.date['startyear'],
                                                 self.date['endyear'], self.date['startmonth'], self.date['endmonth'])
             print("succeed making url")
             if len(str(self.date['startmonth'])) == 2:
-                startmonth=str(self.date['startmonth'])
+                startmonth = str(self.date['startmonth'])
             else:
-                startmonth='0'+str(self.date['startmonth'])
+                startmonth = '0'+str(self.date['startmonth'])
             if len(str(self.date['endmonth']))==2:
                 endmonth=str(self.date['endmonth'])
             else:
-                endmonth='0'+str(self.date['endmonth'])
+                endmonth = '0'+str(self.date['endmonth'])
             file = open("Sport_" + category + "_"+str(self.date['startyear'])+str(startmonth)
                         +"_"+str(self.date['endyear'])+str(endmonth)+".csv", 'w', encoding='euc-kr', newline='')
+            #위의 경우 self.date['endyear']가 f string으로 사용이 안됩니다.
             wcsv = csv.writer(file)
-            hefscript2=[]
+            hefscript2 = [] #이는 크롤링이 아닌 csv에 사용
             for list_page in final_urlday:  # Category Year Month Data Page 처리 된 URL
                 # 제목 / URL
                 request_content = requests.get(list_page, headers={'User-Agent': 'Mozilla/5.0'})
                 content_dict = json.loads(request_content.text)
-                hefscript = []
+                hefscript = [] #이는 크롤링에 사용
                 for contents in content_dict["list"]:
                     oid = contents['oid']
                     aid = contents['aid']
@@ -146,17 +146,19 @@ class SportCrawler:
                         pass
 
             # Csv 작성
-            for csvtimeline, csvheadline, csvcontent, csvpress, csvurl in zip(timescript,titlescript, completed_content_match, officename_script,hefscript2):
+            for csv_timeline, csv_headline, csv_content, csv_press, csv_url in zip(timescript,titlescript, completed_content_match, officename_script,hefscript2):
                 try:
-                    if not csvtimeline:
+                    if not csv_timeline:
                         continue
-                    if not csvheadline:
+                    if not csv_headline:
                         continue
-                    if not csvcontent:
+                    if not csv_content:
                         continue
-                    if not csvpress:
+                    if not csv_press:
                         continue
-                    wcsv.writerow([csvtimeline, self.Clearheadline(csvheadline), csvcontent, csvpress, category,csvurl])
+                    if not csv_url:
+                        continue
+                    wcsv.writerow([csv_timeline, self.Clearheadline(csv_headline), csv_content, csv_press, category,csv_url])
                 except:
                     pass
 
@@ -174,16 +176,16 @@ class SportCrawler:
         for category_name in self.selected_category:
             proc = Process(target=self.crawling, args=(category_name,))
             proc.start()
-    def set_date_range(self,a,b,c,d):
-        self.date['startyear'] = a
-        self.date['startmonth'] = b
-        self.date['endyear'] = c
-        self.date['endmonth'] = d
+    def set_date_range(self,startyear,startmonth,endyear,endmonth):
+        self.date['startyear'] = startyear
+        self.date['startmonth'] = startmonth
+        self.date['endyear'] = endyear
+        self.date['endmonth'] = endmonth
 
 
 # Main
 if __name__ == "__main__":
     Spt_crawler = SportCrawler()
     Spt_crawler.set_category('한국야구','한국축구')
-    Spt_crawler.set_date_range(2017,4,2018,1)
+    Spt_crawler.set_date_range(2020,12,2020,12)
     Spt_crawler.start()

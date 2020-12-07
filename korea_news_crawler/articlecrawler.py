@@ -129,7 +129,6 @@ class ArticleCrawler(object):
                 
                 # 기사 HTML 가져옴
                 request_content = self.get_url_data(content_url)
-                request_content2 = requests.get(content_url,headers={'User-Agent':'Mozilla/5.0'})
 
                 try:
                     document_content = BeautifulSoup(request_content.content, 'html.parser')
@@ -158,7 +157,7 @@ class ArticleCrawler(object):
                     if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
                     #기사 시간대 가져옴
-                    time = re.findall('<span class="t11">(.*)</span>',request_content2.text)[0]
+                    time = re.findall('<span class="t11">(.*)</span>',request_content.text)[0]
                     # CSV 작성
 
                     wcsv = writer.get_writer_csv()
