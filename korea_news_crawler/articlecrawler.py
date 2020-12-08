@@ -4,9 +4,12 @@
 from time import sleep
 from bs4 import BeautifulSoup
 from multiprocessing import Process
-from korea_news_crawler.exceptions import *
-from korea_news_crawler.articleparser import ArticleParser
-from korea_news_crawler.writer import Writer
+#from korea_news_crawler.exceptions import *
+from exceptions import *
+from articleparser import ArticleParser
+from writer import Writer
+#from korea_news_crawler.articleparser import ArticleParser
+#from korea_news_crawler.writer import Writer
 import os
 import platform
 import calendar
@@ -72,6 +75,7 @@ class ArticleCrawler(object):
 
                     # totalpage는 네이버 페이지 구조를 이용해서 page=10000으로 지정해 totalpage를 알아냄
                     # page=10000을 입력할 경우 페이지가 존재하지 않기 때문에 page=totalpage로 이동 됨 (Redirect)
+
                     totalpage = ArticleParser.find_news_totalpage(url + "&page=10000")
                     for page in range(1, totalpage + 1):
                         made_urls.append(url + "&page=" + str(page))
@@ -82,7 +86,7 @@ class ArticleCrawler(object):
         remaining_tries = int(max_tries)
         while remaining_tries > 0:
             try:
-                return requests.get(url)
+                return requests.get(url,headers={'User-Agent':'Mozilla/5.0'})
             except requests.exceptions:
                 sleep(60)
             remaining_tries = remaining_tries - 1
@@ -93,22 +97,19 @@ class ArticleCrawler(object):
         print(category_name + " PID: " + str(os.getpid()))    
 
         writer = Writer(category_name=category_name, date=self.date)
-
         # 기사 URL 형식
         url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(self.categories.get(category_name)) + "&date="
-
         # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
         day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'], self.date['start_month'], self.date['end_month'])
+
         print(category_name + " Urls are generated")
         print("The crawler starts")
 
         for URL in day_urls:
-
             regex = re.compile("date=(\d+)")
             news_date = regex.findall(URL)[0]
 
             request = self.get_url_data(URL)
-
             document = BeautifulSoup(request.content, 'html.parser')
 
             # html - newsflash_body - type06_headline, type06
@@ -128,6 +129,7 @@ class ArticleCrawler(object):
                 
                 # 기사 HTML 가져옴
                 request_content = self.get_url_data(content_url)
+
                 try:
                     document_content = BeautifulSoup(request_content.content, 'html.parser')
                 except:
@@ -154,11 +156,14 @@ class ArticleCrawler(object):
                     text_company = text_company + str(tag_company[0].get('content'))
                     if not text_company:  # 공백일 경우 기사 제외 처리
                         continue
-                        
+                    #기사 시간대 가져옴
+                    time = re.findall('<span class="t11">(.*)</span>',request_content.text)[0]
                     # CSV 작성
+
                     wcsv = writer.get_writer_csv()
-                    wcsv.writerow([news_date, category_name, text_company, text_headline, text_sentence, content_url])
-                    
+                    wcsv.writerow([time, category_name, text_company, text_headline, text_sentence, content_url])
+
+                    del time
                     del text_company, text_sentence, text_headline
                     del tag_company 
                     del tag_content, tag_headline
@@ -179,6 +184,6 @@ class ArticleCrawler(object):
 
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
-    Crawler.set_category("생활문화", "IT과학")
-    Crawler.set_date_range(2017, 1, 2018, 4)
+    Crawler.set_category('생활문화','경제')
+    Crawler.set_date_range(2017, 4, 2018, 1)
     Crawler.start()
