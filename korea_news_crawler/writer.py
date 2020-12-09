@@ -16,7 +16,11 @@ class Writer(object):
         self.csv_writer = csv.writer(self.file)
 
     def initialize_file(self, category, article_category):
-        file_name = f'../output/{category}_{article_category}_{self.start_year}{self.start_month}_{self.end_year}{self.end_month}.csv'
+        output_path = f'../output'
+        if os.path.exists(output_path) is not True:
+            os.mkdir(output_path)
+
+        file_name = f'{output_path}/{category}_{article_category}_{self.start_year}{self.start_month}_{self.end_year}{self.end_month}.csv'
         if os.path.isfile(file_name):
             raise ExistFile(file_name)
 
