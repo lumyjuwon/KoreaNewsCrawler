@@ -1,6 +1,5 @@
 .idea
 __pycache__
-dist
 build
 output
 korea_news_crawler/.idea
