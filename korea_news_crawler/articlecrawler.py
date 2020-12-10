@@ -187,11 +187,8 @@ class ArticleCrawler(object):
 
 
 if __name__ == "__main__":
-    """
+
     Crawler = ArticleCrawler()
     Crawler.set_category('생활문화')
     Crawler.set_date_range(2018, 1, 2018, 2)
     Crawler.start()
-    """
-    Crawler = ArticleCrawler()
-    Crawler.start_with_gui()
