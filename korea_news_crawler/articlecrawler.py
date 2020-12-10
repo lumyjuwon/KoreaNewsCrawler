@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8, euc-kr -*-
 
-import os
 import platform
 import calendar
 import requests
@@ -12,6 +11,7 @@ from multiprocessing import Process
 from korea_news_crawler.exceptions import *
 from korea_news_crawler.articleparser import ArticleParser
 from korea_news_crawler.writer import Writer
+
 
 
 class ArticleCrawler(object):
@@ -184,8 +184,14 @@ class ArticleCrawler(object):
             proc.start()
 
 
+
+
 if __name__ == "__main__":
+    """
     Crawler = ArticleCrawler()
     Crawler.set_category('생활문화')
     Crawler.set_date_range(2018, 1, 2018, 2)
     Crawler.start()
+    """
+    Crawler = ArticleCrawler()
+    Crawler.start_with_gui()
