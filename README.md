@@ -71,7 +71,6 @@ Spt_crawler.start()
  Colum D: 기사 제목  
  Colum E: 기사 본문  
  Colum F: 기사 주소  
- 
  수집한 모든 데이터는 csv 확장자로 저장됩니다.  
 
 
