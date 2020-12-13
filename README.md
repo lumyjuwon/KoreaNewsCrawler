@@ -62,7 +62,7 @@ Spt_crawler.start()
  ![ex_screenshot](./img/article_result.PNG)
  ![ex_screenshot](./img/sport_resultimg.PNG)
  
- Colum A: 기사 날짜 & 
+ Colum A: 기사 날짜 & 시간 
  Colum B: 기사 카테고리  
  Colum C: 언론사  
  Colum D: 기사 제목  
