@@ -89,10 +89,8 @@ class SportCrawler:
                         Maked_url.append(url)  # [[page1,page2,page3 ....]
         return Maked_url
     def crawling(self, category_name):
-        Url_category = []
-        Category = []
-        Category.append(category_name)
-        Url_category.append(self.category[category_name])
+        Url_category = [self.category[category_name]]
+        Category = [category_name]
         titlescript = []
 
         officename_script = []
