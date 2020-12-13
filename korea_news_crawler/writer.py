@@ -26,7 +26,7 @@ class Writer(object):
 
         user_os = str(platform.system())
         if user_os == "Windows":
-            self.file = open(file_name, 'w', encoding='utf-8', newline='') # encoding을 utf-8로 하지 않으면 Crawling이 10개도 못가고 encoding issue가 생깁니다..
+            self.file = open(file_name, 'w', encoding='euc-kr', newline='')
         # Other OS uses utf-8
         else:
             self.file = open(file_name, 'w', encoding='utf-8', newline='')

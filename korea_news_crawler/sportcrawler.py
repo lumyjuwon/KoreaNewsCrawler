@@ -157,12 +157,11 @@ class SportCrawler:
                     try:
                         text_sentence = text_sentence + str(content_tag_content[0].find_all(text=True))
                         matched_content = self.clear_content(text_sentence)
+                        writer.write_row([time_script, category, office_name_script, self.clear_headline(title_script),
+                                          matched_content,
+                                          hefscript])
                     except:
                         pass
-                    print([time_script, category, office_name_script, self.clear_headline(title_script), matched_content,
-                         hefscript])
-                    writer.write_row([time_script, category, office_name_script, self.clear_headline(title_script), matched_content,
-                         hefscript])
             writer.close()
 
     def set_category(self, *args):
