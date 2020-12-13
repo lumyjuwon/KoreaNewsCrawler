@@ -2,7 +2,7 @@
 
 이 크롤러는 네이버 포털에 올라오는 언론사 뉴스 기사들을 크롤링 해주는 크롤러입니다.  
 크롤링 가능한 기사 카테고리는 정치, 경제, 생활문화, IT과학, 사회, 세계, 오피니언입니다.  
-스포츠 기사같은 경우 야구, 축구, 농구, 배구, 골프, 일반 스포츠, e스포츠입니다.  
+스포츠 기사같은 경우 해외야구, 해외축구, 한국야구, 한국축구, 농구, 배구, 골프, 일반 스포츠, e스포츠입니다.  
 
 **스포츠 기사는 현재 html 형식이 바껴 사용이 불가능 한 상태입니다. 빠른 시일내로 업데이트 하겠습니다.**  
   
@@ -38,7 +38,22 @@ Crawler.set_date_range(2017, 1, 2018, 4)
 Crawler.start()
 ```
   2017년 1월 ~ 2018년 4월까지 정치, IT과학, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
+
+## Sports News Crawler Example 
+  Method는 ArticleCrawler()와 유사합니다.
+```
+from korea_news_crawler.sportcrawler import SportCrawler 
+
+Spt_crawler = SportCrawler()
+Spt_crawler.set_category('한국야구','한국축구')
+Spt_crawler.set_date_range(2017,1,2018,4)
+Spt_crawler.start()
+```
+  2017년 1월 ~ 2018년 4월까지 한국야구, 한국축구 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
   
+** korea_news_crawler가 현재의 파일로 release되어야 from korea_news_crawler.sportcrawler import SportCrawler 후의 코드가 올바르게 작동될 것으로 보입니다.
+** 현재는 Local에서 sportcrawler.py 파일을 직접 실행하여 크롤링이 가능합니다.
+
 ## Multi Process 안내
   intel i5 9600 cpu로 테스트 해본 결과 1개의 카테고리 당 평균 **8%** 의 cpu 점유율을 보였습니다.  
   크롤러를 실행하는 컴퓨터 사양에 맞게 카테고리 개수를 맞추시거나 반복문을 이용하시기 바랍니다.
@@ -63,7 +78,7 @@ Crawler.start()
 
 This crawler crawles news from portal Naver  
 Crawlable article categories include politics, economy, lifeculture, global, IT/science, society.  
-In the case of sports articles, that include Baseball, soccer, basketball, volleyball, golf, general sports, e-sports.  
+In the case of sports articles, that include korea baseball, korea soccer, world baseball, world soccer, basketball, volleyball, golf, general sports, e-sports.  
 
 **In the case of sports articles, you can't use sport article crawler because html form is changed. I will update sport article crawler 
 as soon as possible.**
@@ -100,7 +115,21 @@ Crawler.set_date_range(2017, 1, 2018, 4)
 Crawler.start()
 ```
  From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for political, IT science, world, and economic category news.
+
+## Sports News Crawler Example
+  Method is similar to ArticleCrawler().
+```
+from korea_news_crawler.sportcrawler import SportCrawler 
+
+Spt_crawler = SportCrawler()
+Spt_crawler.set_category('korea baseball','korea soccer')
+Spt_crawler.set_date_range(2017,1,2018,4)
+Spt_crawler.start()
+```
+  From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for korea baseball, and korea soccer category news.
   
+** korea_news_crawler should be released with new sportcrawler.py file
+** For now, we can crawl sports news with executing sportcrawler.py in local.
 ## Multi Process Information
 Testing with intel i5 9600 cpu showed an average ** 8% ** cpu share per category.  
 Please adjust the number of categories to match the specifications of the computer running the crawler, or use a loop.
