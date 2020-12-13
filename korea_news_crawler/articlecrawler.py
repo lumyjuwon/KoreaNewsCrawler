@@ -4,12 +4,15 @@
 from time import sleep
 from bs4 import BeautifulSoup
 from multiprocessing import Process
-#from korea_news_crawler.exceptions import *
 from exceptions import *
 from articleparser import ArticleParser
 from writer import Writer
+#from korea_news_crawler.exceptions import *
 #from korea_news_crawler.articleparser import ArticleParser
 #from korea_news_crawler.writer import Writer
+"""
+새로운 version의 korea_news_crawler의 release가 진행된 후 위의 주석된 import문들로 바꿔야 좋을 것 같습니다.
+"""
 import os
 import platform
 import calendar

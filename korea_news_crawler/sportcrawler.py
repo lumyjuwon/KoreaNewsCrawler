@@ -104,6 +104,7 @@ class SportCrawler:
             final_urlday = self.Make_url(url,self.date['startyear'],
                                                 self.date['endyear'], self.date['startmonth'], self.date['endmonth'])
             print("succeed making url")
+            print("crawler starts.")
             if len(str(self.date['startmonth'])) == 2:
                 startmonth = str(self.date['startmonth'])
             else:
@@ -162,7 +163,7 @@ class SportCrawler:
                         continue
                     if not csv_url:
                         continue
-                    wcsv.writerow([csv_timeline, self.Clearheadline(csv_headline), csv_content, csv_press, category,csv_url])
+                    wcsv.writerow([csv_timeline, category, csv_press,self.Clearheadline(csv_headline), csv_content,csv_url])
                 except:
                     pass
 
