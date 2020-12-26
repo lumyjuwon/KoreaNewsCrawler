@@ -81,12 +81,11 @@ class SportCrawler:
 
             for month in range(target_start_month, target_last_month + 1):
                 for day in range(1, calendar.monthrange(year, month)[1] + 1):
-                    url = input_url
                     if len(str(month)) == 1:
                         month = "0" + str(month)
                     if len(str(day)) == 1:
                         day = "0" + str(day)
-                    url = f'{url}{year}{month}{day}'
+                    url = f'{input_url}{year}{month}{day}'
                     # page 날짜 정보만 있고 page 정보가 없는 url 임시 저장
                     final_url = copy.deepcopy(url)
 
@@ -137,17 +136,17 @@ class SportCrawler:
                 content_dict = json.loads(request_content.text)
                 # 이는 크롤링에 사용
 
-                hefscript = ''
+                hef_script = ''
 
                 for contents in content_dict["list"]:
                     oid = contents['oid']
                     aid = contents['aid']
                     title_script = contents['title']
                     time_script = contents['datetime']
-                    hefscript = "https://sports.news.naver.com/news.nhn?oid=" + oid + "&aid=" + aid
+                    hef_script = "https://sports.news.naver.com/news.nhn?oid=" + oid + "&aid=" + aid
                     office_name_script = contents['officeName']
                     sleep(0.01)
-                    content_request_content = requests.get(hefscript, headers={'User-Agent': 'Mozilla/5.0'})
+                    content_request_content = requests.get(hef_script, headers={'User-Agent': 'Mozilla/5.0'})
                     content_document_content = BeautifulSoup(content_request_content.content, 'html.parser')
                     content_tag_content = content_document_content.find_all('div', {'class': 'news_end'},
                                                                             {'id': 'newsEndContents'})
@@ -159,7 +158,7 @@ class SportCrawler:
                         matched_content = self.clear_content(text_sentence)
                         writer.write_row([time_script, category, office_name_script, self.clear_headline(title_script),
                                           matched_content,
-                                          hefscript])
+                                          hef_script])
                     except:
                         pass
             writer.close()
