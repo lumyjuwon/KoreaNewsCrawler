@@ -90,7 +90,7 @@ class SportCrawler:
                     final_url = copy.deepcopy(url)
 
                     # TotalPage 확인
-                    total_page = self.get_total_page(url)
+                    total_page = self.get_total_page(final_url)
                     for page in range(1, total_page + 1):
                         # url page 초기화
                         url = f'{final_url}&page={page}'
