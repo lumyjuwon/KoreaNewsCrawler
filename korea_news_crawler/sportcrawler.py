@@ -9,7 +9,6 @@ from multiprocessing import Process
 from korea_news_crawler.exceptions import *
 from korea_news_crawler.writer import Writer
 #from korea_news_crawler.writer import Writer
-import copy
 
 
 class SportCrawler:
