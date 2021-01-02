@@ -87,7 +87,7 @@ class SportCrawler:
                         day = "0" + str(day)
                     url = f'{input_url}{year}{month}{day}'
                     # page 날짜 정보만 있고 page 정보가 없는 url 임시 저장
-                    final_url = copy.deepcopy(url)
+                    final_url = f'${input_url}{year}{month}{day}'
 
                     # TotalPage 확인
                     total_page = self.get_total_page(final_url)
