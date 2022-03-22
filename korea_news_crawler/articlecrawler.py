@@ -18,7 +18,7 @@ class ArticleCrawler(object):
         self.categories = {'정치': 100, '경제': 101, '사회': 102, '생활문화': 103, '세계': 104, 'IT과학': 105, '오피니언': 110,
                            'politics': 100, 'economy': 101, 'society': 102, 'living_culture': 103, 'world': 104, 'IT_science': 105, 'opinion': 110}
         self.selected_categories = []
-        self.date = {'start_year': 0, 'start_month': 0, 'end_year': 0, 'end_month': 0}
+        self.date = {'start_year': 0, 'start_month': 0, 'start_day' : 0, 'end_year': 0, 'end_month': 0, 'end_day':0}
         self.user_operating_system = str(platform.system())
 
     def set_category(self, *args):
@@ -27,16 +27,70 @@ class ArticleCrawler(object):
                 raise InvalidCategory(key)
         self.selected_categories = args
 
-    def set_date_range(self, start_year, start_month, end_year, end_month):
-        args = [start_year, start_month, end_year, end_month]
+    @staticmethod
+    def get_month_day(year, month):
+        month_day = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:30}
+        
+        # Check Leap Year
+        IsLeapYear = False
+        if year % 4 == 0:
+            if year % 100 == 0:
+                if year % 400 == 0:
+                    IsLeapYear = True
+                else:
+                    IsLeapYear = False
+            else:
+                IsLeapYear = True
+        else:
+            IsLeapYear = False
+        if IsLeapYear:
+            month_day[2] = 29
+
+        return month_day[month]
+
+    def set_date_range(self, start_date:str, end_date:str):
+        start = list(map(int, start_date.split("-")))
+        end = list(map(int, end_date.split("-")))
+        
+        # Setting Start Date
+        if len(start) == 1: # Input Only Year
+            start_year = start[0]
+            start_month = 1
+            start_day = 1
+        elif len(start) == 2: # Input Year and month
+            start_year, start_month = start
+            start_day = 1
+        elif len(start) == 3: # Input Year, month and day
+            start_year, start_month, start_day = start
+        
+        # Setting End Date
+        if len(end) == 1: # Input Only Year
+            end_year = end[0]
+            end_month = 12
+            end_day = 31
+        elif len(end) == 2: # Input Year and month
+            end_year, end_month = end
+            end_day = self.get_month_day(end_year, end_month)
+        elif len(end) == 3: # Input Year, month and day
+            end_year, end_month, end_day = end
+
+        args = [start_year, start_month, start_day, end_year, end_month, end_day]
+
         if start_year > end_year:
             raise InvalidYear(start_year, end_year)
         if start_month < 1 or start_month > 12:
             raise InvalidMonth(start_month)
         if end_month < 1 or end_month > 12:
             raise InvalidMonth(end_month)
+        if start_day < 1 or self.get_month_day(start_year, start_month) < start_day:
+            raise InvalidDay(start_day)
+        if end_day < 1 or self.get_month_day(end_year, end_month) < end_day:
+            raise InvalidDay(end_day)
         if start_year == end_year and start_month > end_month:
             raise OverbalanceMonth(start_month, end_month)
+        if start_year == end_year and start_month == end_month and start_day > end_day:
+            raise OverbalanceDay(start_day, end_day)
+
         for key, date in zip(self.date, args):
             self.date[key] = date
         print(self.date)

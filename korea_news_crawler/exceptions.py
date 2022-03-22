@@ -53,11 +53,27 @@ class InvalidMonth(Exception):
     def __str__(self):
         return self.message
 
+# 일이 올바르지 않을 때
+class InvalidDay(Exception):
+    def __init__(self, day):
+        self.message = f'{day} is an invalid day'
+
+    def __str__(self):
+        return self.message
+
+
 
 # 시작 달과 끝나는 달이 올바르지 않을 때
 class OverbalanceMonth(Exception):
     def __init__(self, start_month, end_month):
         self.message = f'{start_month}(start month) is an overbalance with {end_month}(end month)'
+
+    def __str__(self):
+        return self.message
+
+class OverbalanceDay(Exception):
+    def __init__(self, start_day, end_day):
+        self.message = f'{start_day}(start day) is an overbalance with {end_day}(end day)'
 
     def __str__(self):
         return self.message
