@@ -27,27 +27,6 @@ class ArticleCrawler(object):
                 raise InvalidCategory(key)
         self.selected_categories = args
 
-    @staticmethod
-    def get_month_day(year, month):
-        month_day = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:30}
-        
-        # Check Leap Year
-        IsLeapYear = False
-        if year % 4 == 0:
-            if year % 100 == 0:
-                if year % 400 == 0:
-                    IsLeapYear = True
-                else:
-                    IsLeapYear = False
-            else:
-                IsLeapYear = True
-        else:
-            IsLeapYear = False
-        if IsLeapYear:
-            month_day[2] = 29
-
-        return month_day[month]
-
     def set_date_range(self, start_date:str, end_date:str):
         start = list(map(int, start_date.split("-")))
         end = list(map(int, end_date.split("-")))
@@ -162,7 +141,7 @@ class ArticleCrawler(object):
         writer = Writer(category='Article', article_category=category_name, date=self.date)
         # 기사 url 형식
         url_format = f'http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1={self.categories.get(category_name)}&date='
-        # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
+        # start_year년 start_month월 start_day일 부터 ~ end_year년 end_month월 end_day일까지 기사를 수집합니다.
         target_urls = self.make_news_page_url(url_format, self.date)
 
         print(category_name + " Urls are generated")
@@ -254,5 +233,5 @@ class ArticleCrawler(object):
 if __name__ == "__main__":
     Crawler = ArticleCrawler()
     Crawler.set_category('생활문화')
-    Crawler.set_date_range(2018, 1, 2018, 2)
+    Crawler.set_date_range('2018-01', '2018-02')
     Crawler.start()
