@@ -143,10 +143,9 @@ class ArticleCrawler(object):
         url_format = f'http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1={self.categories.get(category_name)}&date='
         # start_year년 start_month월 start_day일 부터 ~ end_year년 end_month월 end_day일까지 기사를 수집합니다.
         target_urls = self.make_news_page_url(url_format, self.date)
+        print(f'{category_name} Urls are generated')
 
-        print(category_name + " Urls are generated")
-        print("The crawler starts")
-
+        print(f'{category_name} is collecting ...')
         for url in target_urls:
             request = self.get_url_data(url)
             document = BeautifulSoup(request.content, 'html.parser')
