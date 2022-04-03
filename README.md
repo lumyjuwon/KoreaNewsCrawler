@@ -30,10 +30,10 @@ from korea_news_crawler.articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("정치", "IT과학", "economy")  
-Crawler.set_date_range(2017, 1, 2018, 4)  
+Crawler.set_date_range("2017-01", "2018-04-20")
 Crawler.start()
 ```
-  2017년 1월 ~ 2018년 4월까지 정치, IT과학, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
+  2017년 1월 ~ 2018년 4월 20일까지 정치, IT과학, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
 
 ## Sports News Crawler Example 
   Method는 ArticleCrawler()와 유사합니다.
@@ -42,10 +42,10 @@ from korea_news_crawler.sportcrawler import SportCrawler
 
 Spt_crawler = SportCrawler()
 Spt_crawler.set_category('한국야구','한국축구')
-Spt_crawler.set_date_range(2017,1,2018,4)
+Spt_crawler.set_date_range("2017-01", "2018-04-20")
 Spt_crawler.start()
 ```
-  2017년 1월 ~ 2018년 4월까지 한국야구, 한국축구 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
+  2017년 1월 ~ 2018년 4월 20일까지 한국야구, 한국축구 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
   
 ## Results
  ![ex_screenshot](./img/article_result.PNG)
@@ -95,10 +95,10 @@ from korea_news_crawler.articlecrawler import ArticleCrawler
 
 Crawler = ArticleCrawler()  
 Crawler.set_category("politics", "IT_science", "economy")  
-Crawler.set_date_range(2017, 1, 2018, 4)  
+Crawler.set_date_range("2017-01", "2018-04-20") 
 Crawler.start()
 ```
- From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for political, IT science, world, and economic category news.
+ From January 2017 to April 20 2018, Parallel crawls will be conducted using multiprocessors for political, IT science, world, and economic category news.
 
 ## Sports News Crawler Example
   Method is similar to ArticleCrawler().
@@ -107,10 +107,10 @@ from korea_news_crawler.sportcrawler import SportCrawler
 
 Spt_crawler = SportCrawler()
 Spt_crawler.set_category('korea baseball','korea soccer')
-Spt_crawler.set_date_range(2017,1,2018,4)
+Spt_crawler.set_date_range("2017-01", "2018-04-20") 
 Spt_crawler.start()
 ```
-  From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for korea baseball, and korea soccer category news.
+  From January 2017 to April 20 2018, Parallel crawls will be conducted using multiprocessors for korea baseball, and korea soccer category news.
   
 ## Results
  ![ex_screenshot](./img/article_result.PNG)
