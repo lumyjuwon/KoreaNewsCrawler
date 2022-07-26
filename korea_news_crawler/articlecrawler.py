@@ -162,7 +162,8 @@ class ArticleCrawler(object):
                 post_urls.append(line.a.get('href'))
             del temp_post
 
-            for content_url in post_urls:  # 기사 url
+            for content_url in post_urls[:1]:  # 기사 url
+                print(content_url)
                 # 크롤링 대기 시간
                 sleep(0.01)
                 
@@ -173,19 +174,19 @@ class ArticleCrawler(object):
                     document_content = BeautifulSoup(request_content.content, 'html.parser')
                 except:
                     continue
-
                 try:
                     # 기사 제목 가져옴
-                    tag_headline = document_content.find_all('h3', {'id': 'articleTitle'}, {'class': 'tts_head'})
+                    tag_headline = document_content.find_all('h2',  {'class': 'media_end_head_headline'})
                     # 뉴스 기사 제목 초기화
                     text_headline = ''
                     text_headline = text_headline + ArticleParser.clear_headline(str(tag_headline[0].find_all(text=True)))
                     # 공백일 경우 기사 제외 처리
                     if not text_headline:
                         continue
+                    #<div class="go_trans _article_content" id="dic_area">
 
                     # 기사 본문 가져옴
-                    tag_content = document_content.find_all('div', {'id': 'articleBodyContents'})
+                    tag_content = document_content.find_all('div', {'id': 'dic_area'})
                     # 뉴스 기사 본문 초기화
                     text_sentence = ''
                     text_sentence = text_sentence + ArticleParser.clear_content(str(tag_content[0].find_all(text=True)))
@@ -194,18 +195,17 @@ class ArticleCrawler(object):
                         continue
 
                     # 기사 언론사 가져옴
-                    tag_company = document_content.find_all('meta', {'property': 'me2:category1'})
-
+                    tag_content = document_content.find_all('meta', {'property': 'og:article:author'})
                     # 언론사 초기화
                     text_company = ''
-                    text_company = text_company + str(tag_company[0].get('content'))
+                    text_company = text_company + tag_content[0]['content'].split("|")[0]
 
                     # 공백일 경우 기사 제외 처리
                     if not text_company:
                         continue
-
+                    
                     # 기사 시간대 가져옴
-                    time = re.findall('<span class="t11">(.*)</span>',request_content.text)[0]
+                    time = document_content.find_all('span',{'class':"media_end_head_info_datestamp_time _ARTICLE_DATE_TIME"})[0]['data-date-time']
 
                     # CSV 작성
                     writer.write_row([time, category_name, text_company, text_headline, text_sentence, content_url])
