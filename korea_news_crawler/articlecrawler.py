@@ -162,8 +162,7 @@ class ArticleCrawler(object):
                 post_urls.append(line.a.get('href'))
             del temp_post
 
-            for content_url in post_urls[:1]:  # 기사 url
-                print(content_url)
+            for content_url in post_urls:  # 기사 url
                 # 크롤링 대기 시간
                 sleep(0.01)
                 
